@@ -1,0 +1,53 @@
+"use client";
+import classes from "./layout.module.css";
+import { Footer, Navbar } from "@/components";
+import { AppShell, Container } from "@mantine/core";
+// import { GuardToken } from '@/contexts';
+// import useBoundStore from '@/store';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    // <GuardToken>
+    // <ErrorBoundary>
+    <AppShell
+      header={{ height: 80 }}
+      classNames={{
+        header: classes.header,
+        main: classes.main,
+      }}
+    >
+      <Navbar />
+      <AppShell.Main
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+        }}
+      >
+        <Container
+          fluid
+          w={"100%"}
+          h={"100%"}
+          size="xs"
+          px={0}
+          pb={40}
+          style={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            // backgroundColor: "#FCFDFF",
+          }}
+        >
+          {children}
+        </Container>
+        <Footer />
+      </AppShell.Main>
+    </AppShell>
+    //   </ErrorBoundary>
+    // </GuardToken>
+  );
+}

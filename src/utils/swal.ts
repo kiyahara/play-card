@@ -107,7 +107,7 @@ export async function showSwalModal({
       const confirmButton = Swal.getConfirmButton();
       const cancelButton = Swal.getCancelButton();
       const iconElement = Swal.getHtmlContainer()?.querySelector(
-        ".swal2-icon"
+        ".swal2-icon",
       ) as HTMLElement;
       const content = Swal.getHtmlContainer();
       if (content && color != "") content.style.color = color ?? "#283886";

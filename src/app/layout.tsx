@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import "./globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
@@ -53,7 +53,6 @@ export default function RootLayout({
           sizes="32x32"
         />
         <title>PlayCard - Card For Play</title>
-        {/* <ColorSchemeScript defaultColorScheme="light" /> */}
       </head>
       <body>
         <MantineProvider theme={theme}>
