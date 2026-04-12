@@ -52,7 +52,7 @@ export default function RootLayout({
           href="/faviconApp.png"
           sizes="32x32"
         />
-        <title>PlayCard - Card For Play</title>
+        <title>NEXUS X TCG - Indonesia TCG Market</title>
       </head>
       <body>
         <MantineProvider theme={theme}>

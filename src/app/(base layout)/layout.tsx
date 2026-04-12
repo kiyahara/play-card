@@ -2,6 +2,7 @@
 import classes from "./layout.module.css";
 import { Footer, Navbar } from "@/components";
 import { AppShell, Container } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 // import { GuardToken } from '@/contexts';
 // import useBoundStore from '@/store';
 
@@ -10,11 +11,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { width } = useViewportSize();
+  const isMobile = width <= 768;
   return (
     // <GuardToken>
     // <ErrorBoundary>
     <AppShell
-      header={{ height: 80 }}
+      header={{ height: isMobile ? 50 : 100 }}
       classNames={{
         header: classes.header,
         main: classes.main,

@@ -1,8 +1,7 @@
 "use client";
 
 import { ManageProductTabs } from "@/containers";
-import { Flex, SimpleGrid, Tabs, Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { Flex, Tabs, Text } from "@mantine/core";
 import { useState } from "react";
 
 // const handleClick = () => {
@@ -16,8 +15,6 @@ import { useState } from "react";
 
 export default function MainHome() {
   // const [loading, setLoading] = useState(false);
-  const { width } = useViewportSize();
-  const isMobile = width <= 768;
   const [activeTab, setActiveTab] = useState<string | null>("products");
   return (
     <>
@@ -59,16 +56,7 @@ export default function MainHome() {
           </Tabs.List>
 
           <Tabs.Panel value="products" p={15} bg={"black"}>
-            <Flex h={"100%"} direction={isMobile ? "column" : "column"}>
-              <Flex justify={"space-between"} w={"100%"} pb={10}>
-                <Text size="xs" c={"white"}>
-                  5 Result for: Guo Jia in Grand Archive TCG
-                </Text>
-              </Flex>
-              <SimpleGrid cols={isMobile ? 1 : 3} spacing="xs" pb={10}>
-                <ManageProductTabs />
-              </SimpleGrid>
-            </Flex>
+            <ManageProductTabs />
           </Tabs.Panel>
 
           <Tabs.Panel value="myProducts">Settings tab content</Tabs.Panel>

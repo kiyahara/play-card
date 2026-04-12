@@ -15,7 +15,13 @@ export function Navbar() {
     <>
       <AppShell.Header withBorder={false}>
         <Flex direction="column" w="100%">
-          <Flex w={"100%"} align={"center"} justify={"space-between"} pr={5}>
+          <Flex
+            w={"100%"}
+            align={"center"}
+            justify={"space-between"}
+            pr={5}
+            pt={isMobile ? 0 : 10}
+          >
             <Flex
               w="20%"
               justify="flex-start"
@@ -24,7 +30,7 @@ export function Navbar() {
             >
               <Image
                 radius="md"
-                h={80}
+                h={isMobile ? 50 : 80}
                 src="/TextLogoV3.png"
                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 alt="logo"

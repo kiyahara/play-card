@@ -2,6 +2,7 @@
 import { ModalUtilsProps } from "@/types";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import classes from "./utils.module.css";
 
 export async function showSuccessModal({
   title,
@@ -163,6 +164,12 @@ const ShowLoadingModal: React.FC<LoadingAlertProps> = ({ isLoading }) => {
         title: "Loading...",
         html: "Please wait...",
         allowOutsideClick: false,
+        background: "rgba(255, 255, 255, 0.1)",
+        color: "#fff",
+        backdrop: "rgba(0,0,0,0.6) backdrop-filter: blur(10px)",
+        customClass: {
+          popup: classes.glassSwal,
+        },
         didOpen: () => {
           Swal.showLoading(Swal.getConfirmButton());
         },
