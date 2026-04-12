@@ -1,7 +1,9 @@
 import { api } from "@/api";
+import { Params } from "@/types";
+import { generateSearchParams } from "@/utils/params";
 
-async function getAllDataCard() {
-  const url = "/cards/search?";
+async function getAllDataCard(Param: Params) {
+  const url = "/cards/search?" + generateSearchParams(Param);
   const response = await api.get(url);
   return response.result;
 }
