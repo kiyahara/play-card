@@ -45,7 +45,7 @@ export default function MainHome() {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel value="products" p={15} bg={"black"}>
+          <Tabs.Panel value="products" p={15} bg={"#222222"}>
             <ManageProductTabs setLoading={setLoading} />
           </Tabs.Panel>
 

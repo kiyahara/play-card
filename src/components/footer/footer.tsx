@@ -16,11 +16,14 @@ export function Footer() {
         style={{
           marginTop: "auto", // Pushes the footer to the bottom of the container
           width: "100%",
-          backgroundColor: "black",
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)), rgba(0,0,0,0.8)",
+          backdropFilter: "blur(16px)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
           color: "white",
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: '#f4f4',
         }}
       >
         <Flex

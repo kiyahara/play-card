@@ -36,7 +36,7 @@ export function ContentCardGA({
         }}
       />
 
-      <Box
+      {/* <Box
         style={{
           position: "absolute",
           inset: 0,
@@ -46,7 +46,7 @@ export function ContentCardGA({
           opacity: 0.4,
           pointerEvents: "none",
         }}
-      />
+      /> */}
 
       <Card.Section inheritPadding px="xs" w="45%">
         <Image
@@ -75,18 +75,7 @@ export function ContentCardGA({
             </Text>
           </Box>
 
-          <Box mt="xs">
-            {/* <Text size="xs">
-                            {value.editions
-                              .slice(0, 3)
-                              .map((item) => item.set.prefix)
-                              .join(", ")}
-                            {value.editions.length > 3 && " ..."}
-                          </Text>
-                          <Text fz="sm" c="dimmed">
-                            Total: {value.editions.length} Sets
-                          </Text> */}
-          </Box>
+          <Box mt="xs"></Box>
 
           <Box mt="xs">
             <Text size="sm">26 Listings From:</Text>

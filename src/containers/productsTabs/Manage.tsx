@@ -131,7 +131,10 @@ export default function ManageProductTabs({
                   <React.Fragment key={index}>
                     <ContentCardGA
                       value={value}
-                      onClick={() => setActiveData(value)}
+                      onClick={() => {
+                        setActiveData(value);
+                        setOpenModalDetail(true);
+                      }}
                     />
                   </React.Fragment>
                 ))}

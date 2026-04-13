@@ -11,3 +11,17 @@ export type ModalUtilsProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
 };
+
+export type ModalUniversalInterface = {
+  opened: boolean;
+  close: () => void;
+  title: string | null;
+  size: string;
+  radius?: number;
+  fullScreen?: boolean;
+  isCentered?: boolean;
+  isCloseButton?: boolean;
+  isCantClose?: boolean;
+  children: React.ReactNode;
+  headerStyle?: React.CSSProperties;
+};

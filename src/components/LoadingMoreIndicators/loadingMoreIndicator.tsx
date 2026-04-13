@@ -14,7 +14,7 @@ export function LoadMoreIndicator({
       ref={ref}
       padding="lg"
       radius="md"
-      bg={"black"}
+      bg={"#222222"}
       style={{
         gridColumn: "1 / -1",
         display: "flex",
