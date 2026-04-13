@@ -1,20 +1,12 @@
 "use client";
 
 import { ManageProductTabs } from "@/containers";
+import ShowLoadingModal from "@/utils/swal";
 import { Flex, Tabs, Text } from "@mantine/core";
 import { useState } from "react";
 
-// const handleClick = () => {
-//   showErrorModal({
-//     title: "Fitur Belum Tersedia",
-//     message: "Mohon Maaf Fitur ini masih dalam pengembangan.",
-//     setLoading: undefined,
-//     handleChange: undefined,
-//   });
-// };
-
 export default function MainHome() {
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>("products");
   return (
     <>
@@ -25,9 +17,7 @@ export default function MainHome() {
           minHeight: "100%",
         }}
       >
-        {/* <Flex justify="center" align="center">
-          <ShowLoadingModal isLoading={loading} />
-        </Flex> */}
+        <ShowLoadingModal isLoading={loading} />
         <Tabs
           value={activeTab}
           onChange={setActiveTab}
@@ -56,7 +46,7 @@ export default function MainHome() {
           </Tabs.List>
 
           <Tabs.Panel value="products" p={15} bg={"black"}>
-            <ManageProductTabs />
+            <ManageProductTabs setLoading={setLoading} />
           </Tabs.Panel>
 
           <Tabs.Panel value="myProducts">Settings tab content</Tabs.Panel>

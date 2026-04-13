@@ -14,7 +14,7 @@
   border: 4px solid rgba(255, 255, 255, 0.25);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.7),
-    /* shadow luar (lebih tebal) */ inset 0 1px 2px rgba(255, 255, 255, 0.15),
-    /* highlight atas */ inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    inset 0 1px 2px rgba(255, 255, 255, 0.15),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
