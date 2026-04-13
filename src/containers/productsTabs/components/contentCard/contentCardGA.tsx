@@ -1,7 +1,7 @@
 import { Box, Card, Flex, Image, Text } from "@mantine/core";
 import classes from "./contentCardGA.module.css";
 import { DetailCardGrandArchive } from "@/types";
-import { formatUSD } from "@/utils";
+import { formatUSD, rarityTranslate } from "@/utils";
 
 interface PropCardItemProductTabsTypes {
   value: DetailCardGrandArchive;
@@ -52,7 +52,7 @@ export function ContentCardGA({
         <Image
           h="100%"
           w={150}
-          src={`https://api.gatcg.com${value.editions[0].image}`}
+          src={`https://api.gatcg.com${value.result_editions[0].image}`}
           alt="logo"
           radius="md"
         />
@@ -63,15 +63,13 @@ export function ContentCardGA({
           <Text fz="md">{value.name}</Text>
 
           <Box mt="xs">
-            <Text size="sm">
-              {value.editions
-                .slice(0, 3)
-                .map((item) => item.set.prefix)
-                .join(", ")}
-              {value.editions.length > 3 && " ..."}
+            <Text size="sm">{value.result_editions[0].set.name}</Text>
+            <Text fz="sm" c="dimmed">
+              {value.result_editions[0].set.prefix}
             </Text>
             <Text fz="sm" c="dimmed">
-              Total: {value.editions.length} Sets
+              {rarityTranslate(value.result_editions[0].rarity)}, #
+              {value.result_editions[0].collector_number}
             </Text>
           </Box>
 

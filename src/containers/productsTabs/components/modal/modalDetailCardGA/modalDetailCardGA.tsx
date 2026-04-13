@@ -1,7 +1,9 @@
 import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import { DetailCardGrandArchive } from "@/types";
-import { Box, Card, Flex, Image, Text } from "@mantine/core";
-import { formatUSD } from "@/utils";
+import { Box, Flex, Image, Text } from "@mantine/core";
+import { capitalizeManual, formatUSD } from "@/utils";
+import { useViewportSize } from "@mantine/hooks";
+import classes from "./modalDetailCardGA.module.css";
 
 interface PropsModalDetailCardGATypes {
   dataDetail: DetailCardGrandArchive | null;
@@ -14,54 +16,76 @@ export function ModalDetailCardGA({
   openModal,
   setOpenModal,
 }: PropsModalDetailCardGATypes) {
+  const { width } = useViewportSize();
+  const isMobile = width <= 768;
   return (
     <ModalUniversal
       opened={openModal}
       title={null}
       close={() => setOpenModal(false)}
-      size="100%"
+      size={isMobile ? "100%" : "40%"}
     >
       {dataDetail ? (
-        <Flex bg={"black"}>
-          <Flex px="xs" w="45%">
-            <Image
-              h="100%"
-              w={150}
-              src={`https://api.gatcg.com${dataDetail.editions[0].image}`}
-              alt="logo"
-              radius="md"
-            />
-          </Flex>
-
-          <Flex px="md" w="55%">
-            <Flex justify={"space-between"} direction={"column"} gap={5}>
+        <Flex
+          bg={"black"}
+          justify={"start"}
+          align={isMobile ? "center" : "start"}
+          gap={20}
+          direction={isMobile ? "column" : "row"}
+        >
+          <Image
+            h="100%"
+            w={isMobile ? 150 : 250}
+            src={`https://api.gatcg.com${dataDetail.result_editions[0].image}`}
+            alt="logo"
+            radius="md"
+          />
+          <Flex
+            justify={"space-between"}
+            align={"start"}
+            direction={"column"}
+            gap={5}
+            w={isMobile ? "100%" : ""}
+          >
+            <Flex align="center" gap={6}>
+              <Flex
+                className={classes.elementEffect}
+                style={{
+                  backgroundImage: `url("https://cdn2.gatcg.com/i/elements/${dataDetail.element.toLowerCase()}.png")`,
+                }}
+              />
               <Text fz="md">{dataDetail.name}</Text>
-
-              <Box mt="xs">
-                <Text size="sm">
-                  {dataDetail.editions
-                    .slice(0, 3)
-                    .map((item) => item.set.prefix)
-                    .join(", ")}
-                  {dataDetail.editions.length > 3 && " ..."}
-                </Text>
-                <Text fz="sm" c="dimmed">
-                  Total: {dataDetail.editions.length} Sets
-                </Text>
-              </Box>
-
-              <Box mt="xs"></Box>
-
-              <Box mt="xs">
-                <Text size="sm">26 Listings From:</Text>
-                <Text fz="lg" c="#05772d">
-                  {formatUSD(44.2)}
-                </Text>
-              </Box>
             </Flex>
+            <Flex align="center" gap={6}>
+              <Flex
+                className={classes.typeEffect}
+                style={{
+                  backgroundImage: `url("https://cdn2.gatcg.com/i/types/${dataDetail.types.includes("ALLY") ? "ally" : "ally"}.png")`,
+                }}
+              />
+              <Text fz={"sm"}>
+                {capitalizeManual(dataDetail.types.join(" "))} —{" "}
+                {capitalizeManual(dataDetail.subtypes.join(" "))}
+              </Text>
+            </Flex>
+            <Flex
+              dangerouslySetInnerHTML={{
+                __html: dataDetail.effect_raw.replace(/\n/g, "<br />"),
+              }}
+            />
+
+            <Box mt="xs"></Box>
+
+            <Box mt="xs">
+              <Text size="sm">26 Listings From:</Text>
+              <Text fz="lg" c="#05772d">
+                {formatUSD(44.2)}
+              </Text>
+            </Box>
           </Flex>
         </Flex>
       ) : (
+        // </Flex>
         ""
       )}
     </ModalUniversal>

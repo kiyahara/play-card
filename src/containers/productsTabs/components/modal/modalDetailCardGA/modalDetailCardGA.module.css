@@ -1,0 +1,32 @@
+.effectBauble {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  height: 15px;
+  left: -2px;
+  line-height: 12px;
+  margin-right: 2px;
+  padding: 2px 6px;
+  position: relative;
+}
+
+.elementEffect {
+  /* background-image: url(https://cdn2.gatcg.com/i/elements/water.png); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: help;
+  height: 21.3333px;
+  width: 21.3333px;
+}
+
+.typeEffect {
+  /* background-image: url(https://cdn2.gatcg.com/i/types/ally.png); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: help;
+  height: 16px;
+  width: 16px;
+}

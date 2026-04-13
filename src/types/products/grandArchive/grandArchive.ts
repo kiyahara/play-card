@@ -118,6 +118,7 @@ export interface DetailCardGrandArchive {
   durability: number | null;
   editions: EditionGA[];
   effect: string;
+  effect_html: string;
   effect_raw: string;
   element: string;
   elements: string[];
@@ -128,65 +129,7 @@ export interface DetailCardGrandArchive {
   life: number | null;
   name: string;
   power: number;
-  // result_editions: [
-  //   {
-  //     card_id: "df594Qoszn";
-  //     collector_number: "000";
-  //     configuration: "default";
-  //     created_at: "2024-01-24T12:00:00+00:00";
-  //     effect: null;
-  //     effect_raw: null;
-  //     flavor: null;
-  //     illustrator: "十尾";
-  //     image: "/cards/images/2zw7a98f7b.jpg";
-  //     last_update: "2025-01-18T17:40:17.152+00:00";
-  //     orientation: null;
-  //     rarity: 9;
-  //     slug: "apotheosis-rite-p24-cpr";
-  //     thema_charm_foil: null;
-  //     thema_charm_nonfoil: null;
-  //     thema_ferocity_foil: null;
-  //     thema_ferocity_nonfoil: null;
-  //     thema_foil: null;
-  //     thema_grace_foil: null;
-  //     thema_grace_nonfoil: null;
-  //     thema_mystique_foil: null;
-  //     thema_mystique_nonfoil: null;
-  //     thema_nonfoil: null;
-  //     thema_valor_foil: null;
-  //     thema_valor_nonfoil: null;
-  //     thema_foil_dynamic: false;
-  //     thema_nonfoil_dynamic: false;
-  //     uuid: "2zw7a98f7b";
-  //     collaborators: [];
-  //     circulationTemplates: [];
-  //     circulations: [
-  //       {
-  //         created_at: "2025-01-18T17:40:17.152+00:00";
-  //         edition_id: "2zw7a98f7b";
-  //         foil: true;
-  //         kind: "FOIL";
-  //         last_update: "2025-01-18T17:40:17.152+00:00";
-  //         population: 1;
-  //         population_operator: "=";
-  //         printing: false;
-  //         uuid: "c29f57afoP";
-  //         variants: [];
-  //       },
-  //     ];
-  //     other_orientations: [];
-  //     set: {
-  //       created_at: "2024-01-24T12:00:00+00:00";
-  //       id: "muw6lmtzwg";
-  //       language: "EN";
-  //       last_update: "2025-01-18T17:40:17.152+00:00";
-  //       name: "Promotional 2024";
-  //       prefix: "P24";
-  //       release_date: "2024-01-24T00:00:00";
-  //     };
-  //     effect_html: null;
-  //   },
-  // ];
+  result_editions: EditionGA[];
   slug: string;
   speed: string | null;
   subtypes: string[];
