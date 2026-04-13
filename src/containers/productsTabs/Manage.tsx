@@ -10,19 +10,6 @@ import { Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
 
 export default function ManageProductTabs() {
-  const stats = [
-    { value: 447, label: "Remaining" },
-    { value: 76, label: "In progress" },
-  ];
-
-  const items = stats.map((stat) => (
-    <div key={stat.label}>
-      <Text>{stat.value}</Text>
-      <Text size="xs" c="dimmed">
-        {stat.label}
-      </Text>
-    </div>
-  ));
   const [data, setData] = useState<ResponseGrandArchive | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -90,7 +77,7 @@ export default function ManageProductTabs() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !fetchingRef.current) {
-          pageRef.current += 1; // ✅ always latest
+          pageRef.current += 1;
 
           getListAllCard(pageRef.current);
         }
@@ -158,7 +145,6 @@ export default function ManageProductTabs() {
                       }}
                     />
 
-                    {/* Reflection */}
                     <Box
                       style={{
                         position: "absolute",
@@ -171,7 +157,7 @@ export default function ManageProductTabs() {
                       }}
                     />
 
-                    <Card.Section inheritPadding px="xs" w="40%">
+                    <Card.Section inheritPadding px="xs" w="45%">
                       <Image
                         h="100%"
                         w={150}
@@ -181,17 +167,47 @@ export default function ManageProductTabs() {
                       />
                     </Card.Section>
 
-                    <Card.Section inheritPadding px="md" w="60%">
-                      <Text fz="xl">Guo Jia {index + 1}</Text>
+                    <Card.Section inheritPadding px="md" w="55%">
+                      <Flex
+                        justify={"space-between"}
+                        direction={"column"}
+                        gap={5}
+                      >
+                        <Text fz="md">{value.name}</Text>
 
-                      <Box mt="xs">
-                        <Text>1887</Text>
-                        <Text fz="xs" c="dimmed">
-                          Completed
-                        </Text>
-                      </Box>
+                        <Box mt="xs">
+                          <Text size="xs">
+                            {value.editions
+                              .slice(0, 3)
+                              .map((item) => item.set.prefix)
+                              .join(", ")}
+                            {value.editions.length > 3 && " ..."}
+                          </Text>
+                          <Text fz="sm" c="dimmed">
+                            Total: {value.editions.length} Sets
+                          </Text>
+                        </Box>
 
-                      <Group mt="sm">{items}</Group>
+                        <Box mt="xs">
+                          {/* <Text size="xs">
+                            {value.editions
+                              .slice(0, 3)
+                              .map((item) => item.set.prefix)
+                              .join(", ")}
+                            {value.editions.length > 3 && " ..."}
+                          </Text>
+                          <Text fz="sm" c="dimmed">
+                            Total: {value.editions.length} Sets
+                          </Text> */}
+                        </Box>
+
+                        <Box mt="xs">
+                          <Text size="xs">26 Listings From:</Text>
+                          <Text fz="sm" c="#05772d">
+                            ${44.0}
+                          </Text>
+                        </Box>
+                      </Flex>
                     </Card.Section>
                   </Card>
                 ))}
