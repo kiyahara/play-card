@@ -15,7 +15,7 @@ export function ContentCardGA({
   return (
     <Card
       className={classes.glassCard}
-      padding={10}
+      padding={5}
       withBorder
       orientation="horizontal"
       radius={12}
@@ -48,17 +48,17 @@ export function ContentCardGA({
         }}
       /> */}
 
-      <Card.Section inheritPadding px="xs" w="45%">
+      <Card.Section inheritPadding px={0} w="50%">
         <Image
           h="100%"
-          w={150}
-          src={`https://api.gatcg.com${value.result_editions[0].image}`}
+          w={200}
+          src={`https://api.gatcg.com${value.editions[0].image}`}
           alt="logo"
           radius="md"
         />
       </Card.Section>
 
-      <Card.Section inheritPadding px="md" w="55%">
+      <Card.Section inheritPadding px={5} w="50%">
         <Flex justify={"space-between"} direction={"column"} gap={5}>
           <Text fz="md">{value.name}</Text>
 

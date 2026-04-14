@@ -23,22 +23,30 @@ export function ModalDetailCardGA({
       opened={openModal}
       title={null}
       close={() => setOpenModal(false)}
-      size={isMobile ? "100%" : "40%"}
+      size={isMobile ? "100%" : "70%"}
     >
       {dataDetail ? (
         <Flex
-          bg={"black"}
           justify={"start"}
           align={isMobile ? "center" : "start"}
           gap={20}
+          p={16}
           direction={isMobile ? "column" : "row"}
+          style={{
+            background: "transparent",
+            // backdropFilter: "blur(30px) saturate(160%)",
+            // WebkitBackdropFilter: "blur(30px) saturate(160%)",
+            // border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 20,
+            // boxShadow: "0 20px 80px rgba(0,0,0,0.6)",
+          }}
         >
           <Image
             h="100%"
             w={isMobile ? 150 : 250}
             src={`https://api.gatcg.com${dataDetail.result_editions[0].image}`}
             alt="logo"
-            radius="md"
+            radius={20}
           />
           <Flex
             justify={"space-between"}

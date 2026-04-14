@@ -21,7 +21,7 @@ export default function ModalUniversal({
       onClose={close}
       title={title}
       size={size}
-      radius={radius}
+      // radius={radius}
       centered={isCentered}
       fullScreen={fullScreen}
       withCloseButton={isCloseButton}
@@ -32,45 +32,25 @@ export default function ModalUniversal({
         blur: 12,
       }}
       styles={{
+        content: {
+          background: "rgba(30, 30, 30, 0.55)",
+          backdropFilter: "blur(30px) saturate(160%)",
+          WebkitBackdropFilter: "blur(30px) saturate(160%)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 20px 80px rgba(0,0,0,0.6)",
+        },
+
         header: {
           display: title == null ? "none" : "",
-          background: `
-            radial-gradient(circle at top left, rgba(255,255,255,0.25), transparent 40%),
-            linear-gradient(
-              135deg,
-              rgba(255, 255, 255, 0.12),
-              rgba(255, 255, 255, 0.03)
-            )
-          `,
-
-          backdropFilter: "blur(30px) saturate(180%)",
-          WebkitBackdropFilter: "blur(30px) saturate(180%)",
-
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-
-          boxShadow: `
-            0 10px 40px rgba(0, 0, 0, 0.6),
-            inset 0 1px 1px rgba(255, 255, 255, 0.25),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.3)
-          `,
-
-          color: "white",
+          background: "transparent",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          color: "rgba(255,255,255,0.9)",
         },
 
         body: {
-          background: "black",
-
-          backdropFilter: "blur(30px) saturate(180%)",
-          WebkitBackdropFilter: "blur(30px) saturate(180%)",
-
-          border: "1px solid rgba(255, 255, 255, 0.15)",
-
-          boxShadow: `
-            0 20px 60px rgba(0, 0, 0, 0.7),
-            inset 0 1px 2px rgba(255, 255, 255, 0.2)
-          `,
-          padding: 10,
-          color: "white",
+          background: "transparent",
+          color: "rgba(255,255,255,0.85)",
+          padding: 20,
         },
       }}
     >
