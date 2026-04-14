@@ -1,7 +1,7 @@
 import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import { DetailCardGrandArchive } from "@/types";
 import { Box, Flex, Image, Text } from "@mantine/core";
-import { capitalizeManual, formatUSD } from "@/utils";
+import { capitalizeManual } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./modalDetailCardGA.module.css";
 
@@ -46,7 +46,7 @@ export function ModalDetailCardGA({
             w={isMobile ? 150 : 250}
             src={`https://api.gatcg.com${dataDetail.result_editions[0].image}`}
             alt="logo"
-            radius={20}
+            radius={10}
           />
           <Flex
             justify={"space-between"}
@@ -84,12 +84,12 @@ export function ModalDetailCardGA({
 
             <Box mt="xs"></Box>
 
-            <Box mt="xs">
+            {/* <Box mt="xs">
               <Text size="sm">26 Listings From:</Text>
               <Text fz="lg" c="#05772d">
                 {formatUSD(44.2)}
               </Text>
-            </Box>
+            </Box> */}
           </Flex>
         </Flex>
       ) : (

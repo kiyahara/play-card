@@ -25,7 +25,7 @@ export function LoadMoreIndicator({
     >
       {isFetchingMore ? (
         <Image
-          src="/LoadingArisu.gif"
+          src="https://cdn2.gatcg.com/omni/loading.gif"
           alt="loading"
           w={100}
           fit="contain"

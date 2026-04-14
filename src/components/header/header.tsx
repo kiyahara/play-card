@@ -3,14 +3,16 @@
 import { ActionIcon, AppShell, Flex, Image } from "@mantine/core";
 import { IconShoppingCartFilled, IconUserFilled } from "@tabler/icons-react";
 import { SearchInput } from "../searchInput";
-import { useState } from "react";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./header.module.css";
+import useBoundStore from "@/store";
 
 export function Navbar() {
-  const [search, setSearch] = useState("");
+  const { searchInput, setSearchInput } = useBoundStore().generalStoreData;
+
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+
   return (
     <>
       <AppShell.Header withBorder={false}>
@@ -46,9 +48,9 @@ export function Navbar() {
               justify={"space-between"}
             >
               <SearchInput
-                value={search}
+                value={searchInput}
                 className={classes.glass}
-                setSearchData={setSearch}
+                setSearchData={setSearchInput}
                 placeholder="Cari Produk..."
               />
 

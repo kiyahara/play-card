@@ -52,7 +52,7 @@ export function ContentCardGA({
         <Image
           h="100%"
           w={200}
-          src={`https://api.gatcg.com${value.editions[0].image}`}
+          src={`https://api.gatcg.com${value.result_editions[0].image}`}
           alt="logo"
           radius="md"
         />

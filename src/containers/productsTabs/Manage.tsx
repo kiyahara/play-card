@@ -7,6 +7,7 @@ import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
 import { ContentCardGA, ModalDetailCardGA } from "./components";
+import useBoundStore from "@/store";
 
 interface ProductTabsInterface {
   setLoading: (_value: boolean) => void;
@@ -20,14 +21,23 @@ export default function ManageProductTabs({
     null,
   );
   const [openModalDetail, setOpenModalDetail] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+
+  const { search } = useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
   const fetchingRef = useRef(false);
+  const isTriggeringRef = useRef(false); // 🔥 anti double trigger
   const pageRef = useRef(1);
 
+  // ======================
+  // FETCH FUNCTION
+  // ======================
   async function getListAllCard(nextPage = 1) {
     if (fetchingRef.current) return;
 
@@ -42,7 +52,7 @@ export default function ManageProductTabs({
 
       const Param: Params = {
         pageSize: 15,
-        name: "",
+        name: "" + search,
         page: nextPage,
       };
 
@@ -50,18 +60,19 @@ export default function ManageProductTabs({
 
       if (response) {
         setData((prev) => {
-          if (!prev) return response;
+          if (!prev || nextPage === 1) return response;
 
           return {
             ...response,
-            data:
-              nextPage == 1 ? response.data : [...prev.data, ...response.data],
+            data: [...prev.data, ...response.data],
           };
         });
 
-        if (response.data.length === 0) {
-          setHasMore(false);
-        }
+        // ✅ clean hasMore logic
+        console.log(response);
+        const totalPage = Number(response.total_pages || 0);
+        console.log(totalPage);
+        setHasMore(nextPage < totalPage);
       } else {
         setHasMore(false);
       }
@@ -71,77 +82,109 @@ export default function ManageProductTabs({
       fetchingRef.current = false;
       setLoading(false);
       setIsFetchingMore(false);
+      isTriggeringRef.current = false; // 🔓 unlock observer
     }
   }
 
+  // ======================
+  // SEARCH RESET
+  // ======================
   useEffect(() => {
-    getListAllCard(1);
-  }, []);
+    pageRef.current = 1;
+    isTriggeringRef.current = false;
 
+    setData(null);
+    setHasMore(false);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    getListAllCard(1);
+  }, [search]);
+
+  // ======================
+  // INFINITE SCROLL
+  // ======================
   useEffect(() => {
     if (!loadMoreRef.current || !hasMore) return;
 
     const element = loadMoreRef.current;
 
-    const observer = new IntersectionObserver(
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    observerRef.current = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !fetchingRef.current) {
+        if (
+          entries[0].isIntersecting &&
+          !fetchingRef.current &&
+          !isTriggeringRef.current
+        ) {
+          isTriggeringRef.current = true; // 🔥 lock
+
+          // optional safety
+          if (data && pageRef.current >= data.total_pages) return;
+
           pageRef.current += 1;
           getListAllCard(pageRef.current);
         }
       },
       {
         rootMargin: "200px",
+        threshold: 0.1,
       },
     );
 
-    observer.observe(element);
+    observerRef.current.observe(element);
 
-    return () => observer.disconnect();
-  }, [hasMore]);
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, [hasMore, data]);
 
+  // ======================
+  // RENDER
+  // ======================
   return (
     <>
       <Flex
-        h={data ? "100%" : "100vh"}
-        direction={isMobile ? "column" : "column"}
+        h={data && data.total_cards > 6 ? "100%" : "100vh"}
+        direction="column"
       >
         <Flex
-          justify={"space-between"}
-          w={"100%"}
+          justify="space-between"
+          w="100%"
           pb={10}
-          direction={"column"}
+          direction="column"
           gap={5}
         >
-          <Text size="md" fw={"bold"} c={"white"}>
+          <Text size="md" fw="bold" c="white">
             Summary
           </Text>
-          {data ? (
-            <Text size="sm" c={"white"}>
+
+          {data && (
+            <Text size="sm" c="white">
               Showing 1 - {data.paginated_cards_count} of {data.total_cards}{" "}
               total cards...
             </Text>
-          ) : (
-            ""
           )}
+
           <SimpleGrid cols={isMobile ? 1 : 3} spacing="md" pb={10}>
-            {data ? (
-              <>
-                {data.data.map((value, index) => (
-                  <React.Fragment key={index}>
-                    <ContentCardGA
-                      value={value}
-                      onClick={() => {
-                        setActiveData(value);
-                        setOpenModalDetail(true);
-                      }}
-                    />
-                  </React.Fragment>
-                ))}
-              </>
-            ) : (
-              ""
-            )}
+            {data?.data?.map((value, index) => (
+              <React.Fragment key={index}>
+                <ContentCardGA
+                  value={value}
+                  onClick={() => {
+                    setActiveData(value);
+                    setOpenModalDetail(true);
+                  }}
+                />
+              </React.Fragment>
+            ))}
+
             {hasMore && (
               <LoadMoreIndicator
                 ref={loadMoreRef}
@@ -151,7 +194,7 @@ export default function ManageProductTabs({
           </SimpleGrid>
         </Flex>
 
-        {!hasMore && (
+        {!hasMore && data && (
           <Text ta="center" c="dimmed" pb="md">
             No more data
           </Text>
