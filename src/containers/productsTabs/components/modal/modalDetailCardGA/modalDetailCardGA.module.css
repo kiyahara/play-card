@@ -30,3 +30,47 @@
   height: 16px;
   width: 16px;
 }
+
+.card {
+  padding: 10px;
+
+  /* 🔥 background lebih tebel */
+  background: rgba(20, 20, 20, 0.75);
+
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+
+  /* border lebih kelihatan */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* shadow lebih dalam */
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+
+  cursor: pointer;
+  border-radius: 16px;
+
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+
+  background: rgba(30, 30, 30, 0.85); /* 🔥 makin tebel saat hover */
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+.card img {
+  transition: all 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}

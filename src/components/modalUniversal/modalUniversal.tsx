@@ -8,7 +8,7 @@ export default function ModalUniversal({
   close,
   title,
   size = "md",
-  radius = 20,
+  // radius = 20,
   isCentered = true,
   isCloseButton = true,
   children,

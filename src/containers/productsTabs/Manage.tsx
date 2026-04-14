@@ -32,12 +32,9 @@ export default function ManageProductTabs({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const fetchingRef = useRef(false);
-  const isTriggeringRef = useRef(false); // 🔥 anti double trigger
+  const isTriggeringRef = useRef(false);
   const pageRef = useRef(1);
 
-  // ======================
-  // FETCH FUNCTION
-  // ======================
   async function getListAllCard(nextPage = 1) {
     if (fetchingRef.current) return;
 
@@ -82,13 +79,10 @@ export default function ManageProductTabs({
       fetchingRef.current = false;
       setLoading(false);
       setIsFetchingMore(false);
-      isTriggeringRef.current = false; // 🔓 unlock observer
+      isTriggeringRef.current = false;
     }
   }
 
-  // ======================
-  // SEARCH RESET
-  // ======================
   useEffect(() => {
     pageRef.current = 1;
     isTriggeringRef.current = false;
@@ -104,9 +98,6 @@ export default function ManageProductTabs({
     getListAllCard(1);
   }, [search]);
 
-  // ======================
-  // INFINITE SCROLL
-  // ======================
   useEffect(() => {
     if (!loadMoreRef.current || !hasMore) return;
 
@@ -145,9 +136,6 @@ export default function ManageProductTabs({
     };
   }, [hasMore, data]);
 
-  // ======================
-  // RENDER
-  // ======================
   return (
     <>
       <Flex
@@ -172,7 +160,7 @@ export default function ManageProductTabs({
             </Text>
           )}
 
-          <SimpleGrid cols={isMobile ? 1 : 3} spacing="md" pb={10}>
+          <SimpleGrid cols={isMobile ? 1 : 4} spacing="md" pb={10}>
             {data?.data?.map((value, index) => (
               <React.Fragment key={index}>
                 <ContentCardGA
