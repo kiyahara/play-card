@@ -10,7 +10,7 @@
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/iconAPK.png",
+      "src": "/favicon.ico",
       "sizes": "500x500",
       "type": "image/png"
     }

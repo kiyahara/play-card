@@ -34,6 +34,7 @@
     "@mantine/nprogress": "^9.0.1",
     "@mantine/spotlight": "^9.0.1",
     "@mantine/tiptap": "^9.0.1",
+    "@supabase/supabase-js": "^2.103.2",
     "@tabler/icons-react": "^3.41.1",
     "@tiptap/extension-link": "^3.22.3",
     "@tiptap/pm": "^3.22.3",

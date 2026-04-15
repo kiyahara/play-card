@@ -1,6 +1,10 @@
 "use client";
 
-import { ManageProductGATabs, ManageProductYGOTabs } from "@/containers";
+import {
+  ManageProductGATabs,
+  ManageProductMarketGATabs,
+  ManageProductYGOTabs,
+} from "@/containers";
 import useBoundStore from "@/store";
 import ShowLoadingModal from "@/utils/swal";
 import { Flex, Tabs, Text } from "@mantine/core";
@@ -46,8 +50,11 @@ export default function MainHome() {
             <Tabs.Tab value="GA" color="#FF0033">
               <Text size="xs">Index Grand Archive</Text>
             </Tabs.Tab>
-            <Tabs.Tab value="YGO" color="#FF0033">
+            {/* <Tabs.Tab value="YGO" color="#FF0033">
               <Text size="xs">Index Yu-Gi-Oh</Text>
+            </Tabs.Tab> */}{" "}
+            <Tabs.Tab value="MarketGA" color="#FF0033">
+              <Text size="xs">Market Grand Archive</Text>
             </Tabs.Tab>
           </Tabs.List>
 
@@ -57,6 +64,10 @@ export default function MainHome() {
 
           <Tabs.Panel value="YGO" p={15} bg={"#222222"}>
             <ManageProductYGOTabs setLoading={setLoading} />
+          </Tabs.Panel>
+
+          <Tabs.Panel value="MarketGA" p={15} bg={"#222222"}>
+            <ManageProductMarketGATabs setLoading={setLoading} />
           </Tabs.Panel>
         </Tabs>
       </Flex>
