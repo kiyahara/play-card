@@ -51,7 +51,7 @@ export function ContentCardGA({
         }}
       /> */}
 
-      <Card.Section inheritPadding px={0} w={isMobile ? "50%" : "40%"}>
+      {/* <Card.Section inheritPadding px={0} w={isMobile ? "50%" : "50%"}>
         <Image
           h="100%"
           w={isMobile ? 180 : 200}
@@ -59,15 +59,22 @@ export function ContentCardGA({
           alt="logo"
           radius="md"
         />
-      </Card.Section>
+      </Card.Section> */}
 
       <Card.Section
         inheritPadding
-        px={isMobile ? 10 : 0}
-        w={isMobile ? "50%" : "60%"}
+        // px={isMobile ? 10 : 0}
+        // w={isMobile ? "50%" : "50%"}
       >
-        <Flex justify={"center"} align={"center"} mt={isMobile ? 0 : 30}>
-          <Flex justify={"space-between"} direction={"column"} gap={5}>
+        <Flex justify={"start"} align={"start"} gap={20}>
+          <Image
+            h="100%"
+            w={isMobile ? 180 : 200}
+            src={`https://api.gatcg.com${value.result_editions[0].image}`}
+            alt="logo"
+            radius="md"
+          />
+          <Flex justify={"space-between"} direction={"column"} gap={5} pt={10}>
             <Text fz="md">{value.name}</Text>
 
             <Box mt="xs">

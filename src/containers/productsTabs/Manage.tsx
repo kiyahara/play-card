@@ -27,6 +27,7 @@ export default function ManageProductTabs({
   const { search } = useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+  const isLaptop = width <= 1400;
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -160,7 +161,11 @@ export default function ManageProductTabs({
             </Text>
           )}
 
-          <SimpleGrid cols={isMobile ? 1 : 4} spacing="md" pb={10}>
+          <SimpleGrid
+            cols={isMobile ? 1 : isLaptop ? 3 : 4}
+            spacing="md"
+            pb={10}
+          >
             {data?.data?.map((value, index) => (
               <React.Fragment key={index}>
                 <ContentCardGA
