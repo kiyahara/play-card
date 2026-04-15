@@ -42,6 +42,10 @@ export default function RootLayout({
           content="black-translucent"
         />
         <meta
+          name="impact-site-verification"
+          content="add1dfb4-6970-42d9-a7ad-1c03a3448f22"
+        />
+        <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
