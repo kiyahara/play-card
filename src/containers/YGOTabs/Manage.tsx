@@ -1,26 +1,27 @@
 "use client";
 import { Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
-import { GaService } from "@/api/services";
+import { GaService, YGOService } from "@/api/services";
 import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
 import { ContentCardGA, ModalDetailCardGA } from "./components";
 import useBoundStore from "@/store";
+import { apiYGO } from "@/api";
 
-interface ProductTabsInterface {
+interface ProductYGOTabsInterface {
   setLoading: (_value: boolean) => void;
 }
 
-export default function ManageProductTabs({
+export default function ManageProductYGOTabs({
   setLoading,
-}: ProductTabsInterface) {
+}: ProductYGOTabsInterface) {
   const [data, setData] = useState<ResponseGrandArchive | null>(null);
-  const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
-    null,
-  );
-  const [openModalDetail, setOpenModalDetail] = useState(false);
+  // const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
+  //   null,
+  // );
+  // const [openModalDetail, setOpenModalDetail] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
@@ -34,31 +35,31 @@ export default function ManageProductTabs({
 
   const fetchingRef = useRef(false);
   const isTriggeringRef = useRef(false);
-  const pageRef = useRef(1);
+  const pageRef = useRef(0);
 
-  async function getListAllCard(nextPage = 1) {
+  async function getListAllCard(nextPage = 0) {
     if (fetchingRef.current) return;
 
     fetchingRef.current = true;
 
     try {
-      if (nextPage === 1) {
+      if (nextPage === 0) {
         setLoading(true);
       } else {
         setIsFetchingMore(true);
       }
 
       const Param: Params = {
-        pageSize: 15,
-        name: "" + search,
-        page: nextPage,
+        num: 15,
+        // name: "" + search,
+        offset: nextPage,
       };
 
-      const response = await GaService.getAllDataCard(Param);
+      const response = await YGOService.getAllDataCardYGO(Param);
 
       if (response) {
         setData((prev) => {
-          if (!prev || nextPage === 1) return response;
+          if (!prev || nextPage === 0) return response;
 
           return {
             ...response,
@@ -68,9 +69,9 @@ export default function ManageProductTabs({
 
         // ✅ clean hasMore logic
         console.log(response);
-        const totalPage = Number(response.total_pages || 0);
+        const totalPage = Number(response.meta.pages_remaining || 0);
         console.log(totalPage);
-        setHasMore(nextPage < totalPage);
+        setHasMore(totalPage > 0);
       } else {
         setHasMore(false);
       }
@@ -85,7 +86,7 @@ export default function ManageProductTabs({
   }
 
   useEffect(() => {
-    pageRef.current = 1;
+    pageRef.current = 0;
     isTriggeringRef.current = false;
 
     setData(null);
@@ -99,43 +100,43 @@ export default function ManageProductTabs({
     getListAllCard(1);
   }, [search]);
 
-  useEffect(() => {
-    if (!loadMoreRef.current || !hasMore) return;
+  // useEffect(() => {
+  //   if (!loadMoreRef.current || !hasMore) return;
 
-    const element = loadMoreRef.current;
+  //   const element = loadMoreRef.current;
 
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
+  //   if (observerRef.current) {
+  //     observerRef.current.disconnect();
+  //   }
 
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        if (
-          entries[0].isIntersecting &&
-          !fetchingRef.current &&
-          !isTriggeringRef.current
-        ) {
-          isTriggeringRef.current = true; // 🔥 lock
+  //   observerRef.current = new IntersectionObserver(
+  //     (entries) => {
+  //       if (
+  //         entries[0].isIntersecting &&
+  //         !fetchingRef.current &&
+  //         !isTriggeringRef.current
+  //       ) {
+  //         isTriggeringRef.current = true; // 🔥 lock
 
-          // optional safety
-          if (data && pageRef.current >= data.total_pages) return;
+  //         // optional safety
+  //         if (data && pageRef.current >= data.total_pages) return;
 
-          pageRef.current += 1;
-          getListAllCard(pageRef.current);
-        }
-      },
-      {
-        rootMargin: "200px",
-        threshold: 0.1,
-      },
-    );
+  //         pageRef.current += 15;
+  //         getListAllCard(pageRef.current);
+  //       }
+  //     },
+  //     {
+  //       rootMargin: "200px",
+  //       threshold: 0.1,
+  //     },
+  //   );
 
-    observerRef.current.observe(element);
+  //   observerRef.current.observe(element);
 
-    return () => {
-      observerRef.current?.disconnect();
-    };
-  }, [hasMore, data]);
+  //   return () => {
+  //     observerRef.current?.disconnect();
+  //   };
+  // }, [hasMore, data]);
 
   return (
     <>
@@ -166,7 +167,7 @@ export default function ManageProductTabs({
             spacing="md"
             pb={10}
           >
-            {data?.data?.map((value, index) => (
+            {/* {data?.data?.map((value, index) => (
               <React.Fragment key={index}>
                 <ContentCardGA
                   value={value}
@@ -176,7 +177,7 @@ export default function ManageProductTabs({
                   }}
                 />
               </React.Fragment>
-            ))}
+            ))} */}
 
             {hasMore && (
               <LoadMoreIndicator
@@ -193,11 +194,11 @@ export default function ManageProductTabs({
           </Text>
         )}
 
-        <ModalDetailCardGA
+        {/* <ModalDetailCardGA
           dataDetail={activeData}
           openModal={openModalDetail}
           setOpenModal={setOpenModalDetail}
-        />
+        /> */}
       </Flex>
     </>
   );

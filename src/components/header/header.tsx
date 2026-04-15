@@ -62,7 +62,7 @@ export function Navbar() {
                 justify={"end"}
                 gap={3}
               >
-                <ActionIcon variant="transparent" aria-label="Setting">
+                {/* <ActionIcon variant="transparent" aria-label="Setting">
                   <IconShoppingCartFilled
                     width={20}
                     height={20}
@@ -79,7 +79,7 @@ export function Navbar() {
                     stroke={2}
                     //   onClick={handleSetting}
                   />
-                </ActionIcon>
+                </ActionIcon> */}
               </Flex>
             </Flex>
           </Flex>

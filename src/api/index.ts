@@ -5,12 +5,19 @@ import queryString from "query-string";
 // import jwt from 'jsonwebtoken';
 // import { Session } from 'next-auth';
 
-const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const baseURLGA = process.env.NEXT_PUBLIC_BACKEND_URL_GA;
+const baseURLYGO = process.env.NEXT_PUBLIC_BACKEND_URL_YGO;
 // const apiKey = process.env.NEXT_PUBLIC_NEXTAUTH_KEY;
 // const valueKey = process.env.NEXT_PUBLIC_NEXTAUTH_VALUE;
 
-export const APIAxiosInstance = axios.create({
-  baseURL: baseURL,
+export const APIGAAxiosInstance = axios.create({
+  baseURL: baseURLGA,
+  // timeout: 1000 * 60,
+  timeout: 2000 * 60,
+});
+
+export const APIYGOAxiosInstance = axios.create({
+  baseURL: baseURLYGO,
   // timeout: 1000 * 60,
   timeout: 2000 * 60,
 });
@@ -191,4 +198,5 @@ const createApi = (axiosInstance: AxiosInstance) => {
   };
 };
 
-export const api = createApi(APIAxiosInstance);
+export const apiGA = createApi(APIGAAxiosInstance);
+export const apiYGO = createApi(APIYGOAxiosInstance);

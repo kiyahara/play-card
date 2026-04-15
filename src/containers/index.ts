@@ -1,1 +1,2 @@
-export * from "./productsTabs";
+export * from "./GATabs";
+export * from "./YGOTabs";

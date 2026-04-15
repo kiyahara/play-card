@@ -1,13 +1,16 @@
 "use client";
 
-import { ManageProductTabs } from "@/containers";
+import { ManageProductGATabs, ManageProductYGOTabs } from "@/containers";
+import useBoundStore from "@/store";
 import ShowLoadingModal from "@/utils/swal";
 import { Flex, Tabs, Text } from "@mantine/core";
 import { useState } from "react";
 
 export default function MainHome() {
+  const { setSearchInput } = useBoundStore().generalStoreData;
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<string | null>("products");
+  const [activeTab, setActiveTab] = useState<string | null>("GA");
+
   return (
     <>
       <Flex
@@ -20,7 +23,10 @@ export default function MainHome() {
         <ShowLoadingModal isLoading={loading} />
         <Tabs
           value={activeTab}
-          onChange={setActiveTab}
+          onChange={(value) => {
+            setActiveTab(value);
+            setSearchInput(""); // 🔥 reset langsung di sini
+          }}
           c="white"
           styles={{
             tab: {
@@ -37,19 +43,21 @@ export default function MainHome() {
               boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
             }}
           >
-            <Tabs.Tab value="products" color="#FF0033">
-              <Text size="xs">Products</Text>
+            <Tabs.Tab value="GA" color="#FF0033">
+              <Text size="xs">Index Grand Archive</Text>
             </Tabs.Tab>
-            <Tabs.Tab value="myProducts" color="#FF0033">
-              <Text size="xs">My Products</Text>
+            <Tabs.Tab value="YGO" color="#FF0033">
+              <Text size="xs">Index Yu-Gi-Oh</Text>
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel value="products" p={15} bg={"#222222"}>
-            <ManageProductTabs setLoading={setLoading} />
+          <Tabs.Panel value="GA" p={15} bg={"#222222"}>
+            <ManageProductGATabs setLoading={setLoading} />
           </Tabs.Panel>
 
-          <Tabs.Panel value="myProducts">Settings tab content</Tabs.Panel>
+          <Tabs.Panel value="YGO" p={15} bg={"#222222"}>
+            <ManageProductYGOTabs setLoading={setLoading} />
+          </Tabs.Panel>
         </Tabs>
       </Flex>
     </>

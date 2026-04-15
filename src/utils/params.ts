@@ -1,8 +1,14 @@
 import { Params } from "@/types";
 
-export function generateSearchParams({ name, page, pageSize }: Params): string {
+export function generateSearchParams({
+  name,
+  page,
+  pageSize,
+  num,
+  offset,
+}: Params): string {
   const result: string[] = [];
-  if (!name && !page && !pageSize) {
+  if (!name && !page && !pageSize && !num && !offset) {
     return "";
   }
 
@@ -14,6 +20,12 @@ export function generateSearchParams({ name, page, pageSize }: Params): string {
   }
   if (pageSize) {
     result.push(`page_size=${pageSize}`);
+  }
+  if (num) {
+    result.push(`num=${num}`);
+  }
+  if (offset) {
+    result.push(`offset=${offset}`);
   }
 
   return result.join("&");
