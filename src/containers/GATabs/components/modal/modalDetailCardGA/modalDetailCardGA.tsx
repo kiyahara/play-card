@@ -4,7 +4,7 @@ import {
   DetailProductGAWithPriceInterface,
 } from "@/types";
 import { Flex, Image, Text } from "@mantine/core";
-import { capitalizeManual, errorNotification } from "@/utils";
+import { capitalizeManual, errorNotification, rarityTranslate } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./modalDetailCardGA.module.css";
 import React, { useEffect, useState } from "react";
@@ -40,8 +40,6 @@ export function ModalDetailCardGA({
       );
 
       if (response) {
-        // console.log(response);
-        // setDataGroup(response);
         setDataPrice(response.data);
       }
     } catch (error) {
@@ -76,11 +74,7 @@ export function ModalDetailCardGA({
               direction={isMobile ? "column" : "row"}
               style={{
                 background: "transparent",
-                // backdropFilter: "blur(30px) saturate(160%)",
-                // WebkitBackdropFilter: "blur(30px) saturate(160%)",
-                // border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 20,
-                // boxShadow: "0 20px 80px rgba(0,0,0,0.6)",
               }}
             >
               <Image
@@ -153,14 +147,19 @@ export function ModalDetailCardGA({
                 {dataPrice.filter(
                   (valuePrice) =>
                     valuePrice.extNumber ==
-                    dataDetail.result_editions[0].collector_number,
+                      dataDetail.result_editions[0].collector_number &&
+                    rarityTranslate(dataDetail.result_editions[0].rarity) ==
+                      valuePrice.extRarity,
                 ).length > 0 && dataPrice != null ? (
                   <>
                     {dataPrice
                       .filter(
                         (valuePrice) =>
                           valuePrice.extNumber ==
-                          dataDetail.result_editions[0].collector_number,
+                            dataDetail.result_editions[0].collector_number &&
+                          rarityTranslate(
+                            dataDetail.result_editions[0].rarity,
+                          ) == valuePrice.extRarity,
                       )
                       .map((valuePrice, indexPrice) => {
                         return (

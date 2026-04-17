@@ -1,7 +1,6 @@
 "use client";
 
-import { ActionIcon, AppShell, Flex, Image } from "@mantine/core";
-import { IconShoppingCartFilled, IconUserFilled } from "@tabler/icons-react";
+import { AppShell, Flex, Image } from "@mantine/core";
 import { SearchInput } from "../searchInput";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./header.module.css";
