@@ -149,75 +149,85 @@ export function ModalDetailCardGA({
                     ? moment(dataPrice[0].modifiedOn).format("DD/MM/YYYY")
                     : "-"}
                 </Text>
-                {dataPrice.length > 0 && dataPrice != null ? (
+                {dataPrice.filter(
+                  (valuePrice) =>
+                    valuePrice.extNumber ==
+                    dataDetail.result_editions[0].collector_number,
+                ).length > 0 && dataPrice != null ? (
                   <>
-                    {dataPrice.map((valuePrice, indexPrice) => {
-                      return (
-                        <React.Fragment key={indexPrice}>
-                          <Flex
-                            className={classes.card}
-                            direction={"column"}
-                            gap={5}
-                            w={"100%"}
-                          >
-                            <Text size="sm" fw={"bold"}>
-                              {valuePrice.subTypeName}
-                            </Text>
+                    {dataPrice
+                      .filter(
+                        (valuePrice) =>
+                          valuePrice.extNumber ==
+                          dataDetail.result_editions[0].collector_number,
+                      )
+                      .map((valuePrice, indexPrice) => {
+                        return (
+                          <React.Fragment key={indexPrice}>
                             <Flex
-                              direction={"row"}
-                              justify={"space-evenly"}
-                              align={"start"}
-                              gap={10}
-                            >
-                              <Flex direction={"column"} align={"center"}>
-                                <Text size="sm">Market</Text>
-                                <Text
-                                  size="sm"
-                                  c={valuePrice.marketPrice ? "#05df72" : ""}
-                                >
-                                  {`${valuePrice.marketPrice ? `$${valuePrice.marketPrice}` : "-"}`}
-                                </Text>
-                              </Flex>
-
-                              <Flex direction={"column"} align={"center"}>
-                                <Text size="sm">Low</Text>
-                                <Text
-                                  size="sm"
-                                  c={valuePrice.lowPrice ? "#3370D4" : ""}
-                                >
-                                  {`${valuePrice.lowPrice ? `$${valuePrice.lowPrice}` : "-"}`}
-                                </Text>
-                              </Flex>
-                              <Flex direction={"column"} align={"center"}>
-                                <Text size="sm">High</Text>
-                                <Text
-                                  size="sm"
-                                  c={valuePrice.highPrice ? "#ff6467" : ""}
-                                >
-                                  {`${valuePrice.highPrice ? `$${valuePrice.highPrice}` : "-"}`}
-                                </Text>
-                              </Flex>
-                            </Flex>
-                            <Flex
-                              className={classes.cardImg}
+                              className={classes.card}
                               direction={"column"}
                               gap={5}
-                              onClick={() => {
-                                window.open(`${valuePrice.url}`, "_blank");
-                              }}
-                              w={isMobile ? "50%" : "40%"}
-                              // w={150}
+                              w={"100%"}
                             >
-                              <Image
-                                h={16}
-                                src="https://tcg-architect-bucket.nyc3.cdn.digitaloceanspaces.com/images/tcgplayer-logo-full-color-secondary-white.png"
-                                alt="logo"
-                              />
+                              <Text size="sm" fw={"bold"}>
+                                {valuePrice.subTypeName}
+                              </Text>
+                              <Flex
+                                direction={"row"}
+                                justify={"space-evenly"}
+                                align={"start"}
+                                gap={10}
+                              >
+                                <Flex direction={"column"} align={"center"}>
+                                  <Text size="sm">Market</Text>
+                                  <Text
+                                    size="sm"
+                                    c={valuePrice.marketPrice ? "#05df72" : ""}
+                                  >
+                                    {`${valuePrice.marketPrice ? `$${valuePrice.marketPrice}` : "-"}`}
+                                  </Text>
+                                </Flex>
+
+                                <Flex direction={"column"} align={"center"}>
+                                  <Text size="sm">Low</Text>
+                                  <Text
+                                    size="sm"
+                                    c={valuePrice.lowPrice ? "#3370D4" : ""}
+                                  >
+                                    {`${valuePrice.lowPrice ? `$${valuePrice.lowPrice}` : "-"}`}
+                                  </Text>
+                                </Flex>
+                                <Flex direction={"column"} align={"center"}>
+                                  <Text size="sm">High</Text>
+                                  <Text
+                                    size="sm"
+                                    c={valuePrice.highPrice ? "#ff6467" : ""}
+                                  >
+                                    {`${valuePrice.highPrice ? `$${valuePrice.highPrice}` : "-"}`}
+                                  </Text>
+                                </Flex>
+                              </Flex>
+                              <Flex
+                                className={classes.cardImg}
+                                direction={"column"}
+                                gap={5}
+                                onClick={() => {
+                                  window.open(`${valuePrice.url}`, "_blank");
+                                }}
+                                w={isMobile ? "50%" : "40%"}
+                                // w={150}
+                              >
+                                <Image
+                                  h={16}
+                                  src="https://tcg-architect-bucket.nyc3.cdn.digitaloceanspaces.com/images/tcgplayer-logo-full-color-secondary-white.png"
+                                  alt="logo"
+                                />
+                              </Flex>
                             </Flex>
-                          </Flex>
-                        </React.Fragment>
-                      );
-                    })}
+                          </React.Fragment>
+                        );
+                      })}
                   </>
                 ) : (
                   <>
