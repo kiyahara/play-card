@@ -32,6 +32,7 @@ export function ModalDetailCardGA({
 
   async function getPriceByGroupId() {
     setLoading(true);
+    console.log(dataDetail);
     try {
       const response = await marketGAService.getPriceByGroupId(
         dataDetail?.dataGroup.groupId ?? 0,

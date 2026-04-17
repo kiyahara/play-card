@@ -2,7 +2,7 @@
 
 /* ================= ROOT THEME ================= */
 :root {
-  --background: #0a0a0a; /* FIX: langsung dark, no putih */
+  --background: #222222; /* FIX: langsung dark, no putih */
   --foreground: #ededed;
 }
 
@@ -38,12 +38,12 @@ body,
 }
 
 html {
-  background: #0a0a0a;
+  background: #222222;
 }
 
 body {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: #222222;
   color: var(--foreground);
   font-family: Roboto, sans-serif;
   overflow-y: overlay;

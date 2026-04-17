@@ -6,7 +6,6 @@ export async function GET(req: Request) {
   const name = searchParams.get("name");
   const groupId = searchParams.get("groupId");
 
-  // ❌ wajib 2 parameter
   if (!name || !groupId) {
     return Response.json(
       {
@@ -17,20 +16,15 @@ export async function GET(req: Request) {
     );
   }
 
-  // 🔥 sanitize input (fix koma & spasi aneh)
-  const safeName = name.replace(/,/g, " ").replace(/\s+/g, " ").trim();
+  const search = name.trim();
+  const cleanSearch = search.replace(/,/g, "");
 
-  // 🔥 build query step-by-step (lebih aman dari .or bug)
-  let query = supabase
+  const { data, error } = await supabase
     .from("products")
     .select("*")
     .eq("groupId", Number(groupId))
+    .or(`name.ilike."%${search}%",cleanName.ilike."%${cleanSearch}%"`)
     .limit(20);
-
-  // 🔥 search name (clean + name)
-  query = query.or(`name.ilike.%${safeName}%,cleanName.ilike.%${safeName}%`);
-
-  const { data, error } = await query;
 
   if (error) {
     return Response.json(
