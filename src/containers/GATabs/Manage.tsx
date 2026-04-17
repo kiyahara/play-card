@@ -1,10 +1,15 @@
 "use client";
 import { Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
-import { GaService } from "@/api/services";
+import { GaService, marketGAService } from "@/api/services";
 import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
-import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
+import {
+  DataGroupGAInterface,
+  DetailCardGrandArchive,
+  Params,
+  ResponseGrandArchive,
+} from "@/types";
 import { LoadMoreIndicator } from "@/components";
 import { ContentCardGA, ModalDetailCardGA } from "./components";
 import useBoundStore from "@/store";
@@ -17,6 +22,7 @@ export default function ManageProductGATabs({
   setLoading,
 }: ProductGATabsInterface) {
   const [data, setData] = useState<ResponseGrandArchive | null>(null);
+  const [dataGroup, setDataGroup] = useState<DataGroupGAInterface[]>([]);
   const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
     null,
   );
@@ -57,12 +63,28 @@ export default function ManageProductGATabs({
       const response = await GaService.getAllDataCardGA(Param);
 
       if (response) {
+        const enrichedData = response.data.map(
+          (item: DetailCardGrandArchive) => {
+            const group = dataGroup.find((g) =>
+              item.result_editions[0].set.prefix.includes(g.abbreviation),
+            );
+
+            return {
+              ...item,
+              dataGroup: group || null,
+            };
+          },
+        );
         setData((prev) => {
-          if (!prev || nextPage === 1) return response;
+          if (!prev || nextPage === 1)
+            return {
+              ...response,
+              data: enrichedData,
+            };
 
           return {
             ...response,
-            data: [...prev.data, ...response.data],
+            data: [...prev.data, ...enrichedData],
           };
         });
 
@@ -84,20 +106,39 @@ export default function ManageProductGATabs({
     }
   }
 
+  async function getGroupProductGA() {
+    setLoading(true);
+    try {
+      const response = await marketGAService.getGroupsByCategoryId(74);
+
+      if (response) {
+        setDataGroup(response);
+      }
+    } catch (error) {
+      errorNotification(error);
+    }
+  }
+
   useEffect(() => {
-    pageRef.current = 1;
-    isTriggeringRef.current = false;
+    getGroupProductGA();
+  }, []);
 
-    setData(null);
-    setHasMore(false);
+  useEffect(() => {
+    if (dataGroup.length > 0) {
+      pageRef.current = 1;
+      isTriggeringRef.current = false;
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+      setData(null);
+      setHasMore(false);
 
-    getListAllCard(1);
-  }, [search]);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      getListAllCard(1);
+    }
+  }, [search, dataGroup]);
 
   useEffect(() => {
     if (!loadMoreRef.current || !hasMore) return;

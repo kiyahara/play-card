@@ -88,7 +88,7 @@ export default function ManageProductMarketGATabs({
 
   useEffect(() => {
     getGroupProductGA();
-  }, [search]);
+  }, []);
 
   // useEffect(() => {
   //   if (!loadMoreRef.current || !hasMore) return;

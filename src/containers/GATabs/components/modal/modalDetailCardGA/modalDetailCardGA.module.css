@@ -9,7 +9,7 @@
   left: -2px;
   line-height: 12px;
   margin-right: 2px;
-  padding: 2px 6px;
+  padding: 2px 2px;
   position: relative;
 }
 
@@ -32,6 +32,28 @@
 }
 
 .card {
+  padding: 5px 10px 5px 10px;
+
+  /* 🔥 background lebih tebel */
+  background: rgba(20, 20, 20, 0.75);
+
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+
+  /* border lebih kelihatan */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* shadow lebih dalam */
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+
+  border-radius: 5px;
+
+  transition: all 0.3s ease;
+}
+
+.cardImg {
   padding: 10px;
 
   /* 🔥 background lebih tebel */
@@ -49,28 +71,28 @@
     inset 0 0 20px rgba(255, 255, 255, 0.03);
 
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 5px;
 
   transition: all 0.3s ease;
 }
 
-.card:hover {
+/* .cardImg:hover {
   transform: translateY(-4px) scale(1.02);
 
-  background: rgba(30, 30, 30, 0.85); /* 🔥 makin tebel saat hover */
+  background: rgba(30, 30, 30, 0.85);
 
   border: 1px solid rgba(255, 255, 255, 0.2);
 
   box-shadow:
     0 20px 80px rgba(0, 0, 0, 0.8),
     inset 0 0 30px rgba(255, 255, 255, 0.05);
-}
+} */
 
-.card img {
+.cardImg img {
   transition: all 0.3s ease;
 }
 
-.card:hover img {
+.cardImg:hover img {
   transform: scale(1.1);
   filter: brightness(1.2);
 }

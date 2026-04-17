@@ -112,6 +112,7 @@ export interface EditionGA {
 export interface DetailCardGrandArchive {
   classes: string[];
   cost_memory: number;
+  dataGroup: DataGroupGAInterface;
   cost_reserve: number | null;
   cost: CostGrandArchiveInterface;
   created_at: Date;
@@ -124,6 +125,7 @@ export interface DetailCardGrandArchive {
   elements: string[];
   flavor: string;
   last_update: Date;
+  groupId: string;
   legality: LegalityItemGA;
   level: number | null;
   life: number | null;
@@ -135,4 +137,48 @@ export interface DetailCardGrandArchive {
   subtypes: string[];
   types: string[];
   uuid: string;
+}
+
+export interface DataGroupGAInterface {
+  groupId: number;
+  name: string;
+  abbreviation: string;
+  isSupplemental: false;
+  publishedOn: Date;
+  modifiedOn: Date;
+  categoryId: number;
+}
+
+export interface DetailProductGAWithPriceInterface {
+  id: number;
+  productId: number;
+  name: string;
+  cleanName: string;
+  imageUrl: string;
+  categoryId: number;
+  groupId: number;
+  url: string;
+  modifiedOn: Date;
+  imageCount: number;
+  lowPrice: number;
+  midPrice: number;
+  highPrice: number;
+  marketPrice: number;
+  directLowPrice: number;
+  subTypeName: string;
+  extRarity: string;
+  extNumber: string;
+  extDescription: string;
+  extCardType: string;
+  extCardSubtype: string;
+  extElement: string;
+  extClass: string;
+  extReserveCost: string | null;
+  extSpeed: string | null;
+  extFlavorText: string | null;
+  extPower: string | null;
+  extLife: string | null;
+  extMemoryCost: string | null;
+  extLevel: string | null;
+  extDurability: string | null;
 }

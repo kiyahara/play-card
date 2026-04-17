@@ -48,27 +48,27 @@ export default function MainHome() {
             }}
           >
             <Tabs.Tab value="GA" color="#FF0033">
-              <Text size="xs">Index Grand Archive</Text>
+              <Text size="xs">Grand Archive</Text>
             </Tabs.Tab>
             {/* <Tabs.Tab value="YGO" color="#FF0033">
               <Text size="xs">Index Yu-Gi-Oh</Text>
             </Tabs.Tab> */}{" "}
-            <Tabs.Tab value="MarketGA" color="#FF0033">
+            {/* <Tabs.Tab value="MarketGA" color="#FF0033">
               <Text size="xs">Market Grand Archive</Text>
-            </Tabs.Tab>
+            </Tabs.Tab> */}
           </Tabs.List>
 
           <Tabs.Panel value="GA" p={15} bg={"#222222"}>
             <ManageProductGATabs setLoading={setLoading} />
           </Tabs.Panel>
 
-          <Tabs.Panel value="YGO" p={15} bg={"#222222"}>
+          {/* <Tabs.Panel value="YGO" p={15} bg={"#222222"}>
             <ManageProductYGOTabs setLoading={setLoading} />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
 
-          <Tabs.Panel value="MarketGA" p={15} bg={"#222222"}>
+          {/* <Tabs.Panel value="MarketGA" p={15} bg={"#222222"}>
             <ManageProductMarketGATabs setLoading={setLoading} />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
         </Tabs>
       </Flex>
     </>

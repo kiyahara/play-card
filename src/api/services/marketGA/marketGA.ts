@@ -10,7 +10,15 @@ async function getGroupsByCategoryId(categoryId: number) {
   return response.result;
 }
 
+async function getPriceByGroupId(groups: number, name: string) {
+  const response = await apiSupabase.get(
+    `products?groupId=${groups}&name=${name}`,
+  );
+  return response.result;
+}
+
 export const marketGAService = {
   getAllCategoriesCardMarketGA,
   getGroupsByCategoryId,
+  getPriceByGroupId,
 };
