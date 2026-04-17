@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## WELCOME TO MY PLAY-CARD REPOSITORY
+This is my Next.Js Project named [Play-Card](https://play-card-chi.vercel.app/home) using named NEXUS X TCG - Indonesia Market Place.
 
-## Getting Started
+## Why I'm making this? 
+This platform allows users to access detailed information about cards, including prices, effects, and other relevant details.
+At the moment, only Grand Archive cards are supported.
 
-First, run the development server:
+## Next Target
+My next goal is to create a deck builder for it, if I have enough time.
 
+## Tech Stack (FE)
+I'm using Next.js as my framework and Mantine as my component library, which provides components like headers, footers, cards, and more.
+I'm also using a design style called "Liquid Glass," which gives the UI a transparent, glass-like appearance.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  background: rgba(20, 20, 20, 0.75);
+
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
 ```
+## Tech Stack (BE)
+For the backend, I chose not to use traditional frameworks like Go or Express.js to keep development fast and lightweight.
+Instead, I use [Supabase](https://supabase.com/) to manage my PostgreSQL database and handle backend operations via its client library.
+This approach allows me to interact with endpoints locally without the overhead of maintaining a full backend framework.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Final
+Thank you for visiting my Github. This code is open-source and you can use it as you like if you wanted to build something like this too.
+## Thank You Very Much
