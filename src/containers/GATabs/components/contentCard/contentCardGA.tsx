@@ -15,6 +15,10 @@ export function ContentCardGA({
 }: PropCardItemProductTabsTypes) {
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+  const valueResultEdition = value.result_editions.sort((a, b) => {
+    return b.rarity - a.rarity;
+  });
+
   return (
     <Card
       className={classes.glassCard}
@@ -55,7 +59,7 @@ export function ContentCardGA({
         <Image
           h="100%"
           w={isMobile ? 180 : 200}
-          src={`https://api.gatcg.com${value.result_editions[0].image}`}
+          src={`https://api.gatcg.com${valueResultEdition[0].image}`}
           alt="logo"
           radius="md"
         />
@@ -66,11 +70,11 @@ export function ContentCardGA({
         // px={isMobile ? 10 : 0}
         // w={isMobile ? "50%" : "50%"}
       >
-        <Flex justify={"start"} align={"start"} gap={20}>
+        <Flex justify={"start"} align={"start"} gap={10}>
           <Image
             h="100%"
             w={isMobile ? 180 : 200}
-            src={`https://api.gatcg.com${value.result_editions[0].image}`}
+            src={`https://api.gatcg.com${valueResultEdition[0].image}`}
             alt="logo"
             radius="md"
           />
@@ -78,23 +82,23 @@ export function ContentCardGA({
             <Text fz="md">{value.name}</Text>
 
             <Box mt="xs">
-              <Text size="sm">{value.result_editions[0].set.name}</Text>
+              <Text size="sm">{valueResultEdition[0].set.name}</Text>
             </Box>
 
             <Box mt="xs">
               <Text fz="sm" c="dimmed">
-                {value.result_editions[0].set.prefix}
+                {valueResultEdition[0].set.prefix}
               </Text>
               <Text fz="sm" c="dimmed">
-                {rarityTranslate(value.result_editions[0].rarity)}, #
-                {value.result_editions[0].collector_number}
+                {rarityTranslate(valueResultEdition[0].rarity)}, #
+                {valueResultEdition[0].collector_number}
               </Text>
             </Box>
 
             <Box mt="xs">
               <Text size="sm">Illustrator:</Text>
               <Text fz="sm" c="dimmed">
-                {value.result_editions[0].illustrator}
+                {valueResultEdition[0].illustrator}
               </Text>
             </Box>
           </Flex>

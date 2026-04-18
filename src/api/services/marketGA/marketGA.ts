@@ -10,7 +10,7 @@ async function getGroupsByCategoryId(categoryId: number) {
   return response.result;
 }
 
-async function getPriceByGroupId(groups: number, name: string) {
+async function getPriceByGroupId(groups: string, name: string) {
   const response = await apiSupabase.get(
     `products?groupId=${groups}&name=${name}`,
   );

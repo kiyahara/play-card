@@ -104,7 +104,7 @@ export interface EditionGA {
   //   },
   // ];
   circulations: CirculationGA[];
-  other_orientations: [];
+  other_orientations: DetailOtherOrientationCardGrandArchive[];
   set: SetsGA;
   effect_html: string | null;
 }
@@ -112,7 +112,7 @@ export interface EditionGA {
 export interface DetailCardGrandArchive {
   classes: string[];
   cost_memory: number;
-  dataGroup: DataGroupGAInterface;
+  dataGroup: DataGroupGAInterface[];
   cost_reserve: number | null;
   cost: CostGrandArchiveInterface;
   created_at: Date;
@@ -139,6 +139,57 @@ export interface DetailCardGrandArchive {
   uuid: string;
 }
 
+export interface DetailOtherOrientationCardGrandArchive {
+  classes: string[];
+  cost_memory: number | null;
+  cost_reserve: number | null;
+  cost: CostGrandArchiveInterface;
+  created_at: Date;
+  durability: number | null;
+  effect: string;
+  effect_raw: string;
+  element: string;
+  elements: string[];
+  flavor: string | null;
+  last_update: Date;
+  level: string | null;
+  life: number;
+  name: string;
+  power: number;
+  speed: number | null;
+  subtypes: string[];
+  types: string[];
+  uuid: string;
+  edition_id: string;
+  edition: {
+    set: {
+      id: string;
+      name: string;
+      prefix: string;
+      language: string;
+      created_at: string;
+      last_update: string;
+      release_date: string;
+    };
+    slug: string;
+    uuid: string;
+    image: string;
+    effect: string;
+    flavor: string | null;
+    rarity: number;
+    card_id: string;
+    created_at: Date;
+    effect_raw: string;
+    illustrator: string;
+    last_update: Date;
+    orientation: string;
+    collaborators: string[];
+    configuration: string;
+    collector_number: string;
+    effect_html: string;
+  };
+  effect_html: string;
+}
 export interface DataGroupGAInterface {
   groupId: number;
   name: string;

@@ -2,15 +2,19 @@ import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import {
   DetailCardGrandArchive,
   DetailProductGAWithPriceInterface,
+  EditionGA,
 } from "@/types";
-import { Flex, Image, Text } from "@mantine/core";
-import { capitalizeManual, errorNotification } from "@/utils";
+import { Flex, Tabs, Text } from "@mantine/core";
+import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
-import classes from "./modalDetailCardGA.module.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { marketGAService } from "@/api/services";
-import moment from "moment";
 import ShowLoadingModal from "@/utils/swal";
+import {
+  DetailCardModalDetailGA,
+  ImageCardModalDetailGA,
+  PriceCardModalDetailGA,
+} from "./components";
 
 interface PropsModalDetailCardGATypes {
   dataDetail: DetailCardGrandArchive | null;
@@ -26,22 +30,24 @@ export function ModalDetailCardGA({
   const [dataPrice, setDataPrice] = useState<
     DetailProductGAWithPriceInterface[]
   >([]);
+  const [activeTab, setActiveTab] = useState<string>("Details");
+  const [dataSet, setDataset] = useState<EditionGA | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const { width } = useViewportSize();
   const isMobile = width <= 768;
 
-  async function getPriceByGroupId() {
+  async function getPriceByGroupId(dataForDetail: DetailCardGrandArchive) {
     setLoading(true);
     console.log(dataDetail);
     try {
+      const groupIds = dataForDetail.dataGroup.map((e) => e.groupId);
       const response = await marketGAService.getPriceByGroupId(
-        dataDetail?.dataGroup.groupId ?? 0,
-        dataDetail?.name ?? "",
+        groupIds.length > 0 ? groupIds.join(",") : "",
+        dataForDetail.name ?? "",
       );
 
       if (response) {
-        // console.log(response);
-        // setDataGroup(response);
+        setDataset(dataForDetail.result_editions[0]);
         setDataPrice(response.data);
       }
     } catch (error) {
@@ -53,7 +59,14 @@ export function ModalDetailCardGA({
 
   useEffect(() => {
     if (dataDetail && openModal) {
-      getPriceByGroupId();
+      if (dataDetail.dataGroup.length > 0) {
+        getPriceByGroupId(dataDetail);
+      } else {
+        setDataset(dataDetail.result_editions[0]);
+      }
+    } else {
+      setActiveTab("Details");
+      setDataset(undefined);
     }
   }, [openModal]);
 
@@ -67,7 +80,7 @@ export function ModalDetailCardGA({
           close={() => setOpenModal(false)}
           size={isMobile ? "100%" : "70%"}
         >
-          {dataDetail ? (
+          {dataDetail && dataSet ? (
             <Flex
               justify={"start"}
               align={isMobile ? "center" : "start"}
@@ -76,184 +89,77 @@ export function ModalDetailCardGA({
               direction={isMobile ? "column" : "row"}
               style={{
                 background: "transparent",
-                // backdropFilter: "blur(30px) saturate(160%)",
-                // WebkitBackdropFilter: "blur(30px) saturate(160%)",
-                // border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 20,
-                // boxShadow: "0 20px 80px rgba(0,0,0,0.6)",
               }}
             >
-              <Image
-                h="100%"
-                w={isMobile ? 150 : 350}
-                src={`https://api.gatcg.com${dataDetail.result_editions[0].image}`}
-                alt="logo"
-                radius={10}
+              <ImageCardModalDetailGA
+                dataDetail={dataDetail}
+                dataSet={dataSet}
+                setDataset={setDataset}
               />
+
               <Flex
                 justify={"space-between"}
                 align={"start"}
                 direction={"column"}
                 gap={5}
-                w={isMobile ? "100%" : ""}
+                w={"100%"}
               >
-                <Text size="lg" fw={"bold"} pb={5}>
-                  Card Details :{" "}
-                </Text>
-                <Flex align="center" gap={6}>
-                  <Flex
-                    className={classes.elementEffect}
-                    style={{
-                      backgroundImage: `url("https://cdn2.gatcg.com/i/elements/${dataDetail.element.toLowerCase()}.png")`,
-                    }}
-                  />
-                  <Text size="md">{dataDetail.name}</Text>
-                </Flex>
-                <Flex align="center" gap={6}>
-                  <Flex
-                    className={classes.typeEffect}
-                    style={{
-                      backgroundImage: `url("https://cdn2.gatcg.com/i/types/${dataDetail.types.includes("ALLY") ? "ally" : "ally"}.png")`,
-                    }}
-                  />
-                  <Text size={"sm"}>
-                    {capitalizeManual(dataDetail.types.join(" "))} —{" "}
-                    {capitalizeManual(dataDetail.subtypes.join(" "))}
-                  </Text>
-                </Flex>
-                <Text size="lg" fw={"bold"} pt={5}>
-                  Effect :{" "}
-                </Text>
-                <Flex
-                  dangerouslySetInnerHTML={{
-                    __html: dataDetail.effect_raw.replace(/\n/g, "<br />"),
+                <Tabs
+                  value={activeTab}
+                  onChange={(value) => {
+                    setActiveTab(value ?? "");
                   }}
-                />
-                <Text size="lg" fw={"bold"} pt={5}>
-                  Flavor Text :{" "}
-                </Text>
-                {dataDetail.flavor ? (
-                  <Flex
-                    dangerouslySetInnerHTML={{
-                      __html: dataDetail.flavor.replace(/\n/g, "<br />"),
-                    }}
-                  />
-                ) : (
-                  <Text size={"sm"}>No flavor text available</Text>
-                )}
-                <Text size="lg" fw={"bold"} pt={5}>
-                  All Availble Pricing :{" "}
-                </Text>
-                <Text size="sm" ta={"center"}>
-                  Last Modified On :{" "}
-                  {dataPrice.length > 0
-                    ? moment(dataPrice[0].modifiedOn).format("DD/MM/YYYY")
-                    : "-"}
-                </Text>
-                {dataPrice.filter(
-                  (valuePrice) =>
-                    valuePrice.extNumber ==
-                    dataDetail.result_editions[0].collector_number,
-                ).length > 0 && dataPrice != null ? (
-                  <>
-                    {dataPrice
-                      .filter(
-                        (valuePrice) =>
-                          valuePrice.extNumber ==
-                          dataDetail.result_editions[0].collector_number,
-                      )
-                      .map((valuePrice, indexPrice) => {
-                        return (
-                          <React.Fragment key={indexPrice}>
-                            <Flex
-                              className={classes.card}
-                              direction={"column"}
-                              gap={5}
-                              w={"100%"}
-                            >
-                              <Text size="sm" fw={"bold"}>
-                                {valuePrice.subTypeName}
-                              </Text>
-                              <Flex
-                                direction={"row"}
-                                justify={"space-evenly"}
-                                align={"start"}
-                                gap={10}
-                              >
-                                <Flex direction={"column"} align={"center"}>
-                                  <Text size="sm">Market</Text>
-                                  <Text
-                                    size="sm"
-                                    c={valuePrice.marketPrice ? "#05df72" : ""}
-                                  >
-                                    {`${valuePrice.marketPrice ? `$${valuePrice.marketPrice}` : "-"}`}
-                                  </Text>
-                                </Flex>
+                  variant="outline"
+                  c="white"
+                  style={{
+                    width: "100%",
+                    flex: 1, // 🔥 ini kunci
+                  }}
+                  styles={{
+                    tab: {
+                      borderWidth: "2px",
+                    },
+                    list: {
+                      borderBottomWidth: "2px", // garis bawah juga ikut tebal
+                    },
+                  }}
+                >
+                  <Tabs.List>
+                    <Tabs.Tab value="Details" color="#FF0033">
+                      <Text size="xs">Details</Text>
+                    </Tabs.Tab>
+                    <Tabs.Tab value="Price" color="#FF0033">
+                      <Text size="xs">Price</Text>
+                    </Tabs.Tab>
+                  </Tabs.List>
 
-                                <Flex direction={"column"} align={"center"}>
-                                  <Text size="sm">Low</Text>
-                                  <Text
-                                    size="sm"
-                                    c={valuePrice.lowPrice ? "#3370D4" : ""}
-                                  >
-                                    {`${valuePrice.lowPrice ? `$${valuePrice.lowPrice}` : "-"}`}
-                                  </Text>
-                                </Flex>
-                                <Flex direction={"column"} align={"center"}>
-                                  <Text size="sm">High</Text>
-                                  <Text
-                                    size="sm"
-                                    c={valuePrice.highPrice ? "#ff6467" : ""}
-                                  >
-                                    {`${valuePrice.highPrice ? `$${valuePrice.highPrice}` : "-"}`}
-                                  </Text>
-                                </Flex>
-                              </Flex>
-                              <Flex
-                                className={classes.cardImg}
-                                direction={"column"}
-                                gap={5}
-                                onClick={() => {
-                                  window.open(`${valuePrice.url}`, "_blank");
-                                }}
-                                w={isMobile ? "50%" : "40%"}
-                                // w={150}
-                              >
-                                <Image
-                                  h={16}
-                                  src="https://tcg-architect-bucket.nyc3.cdn.digitaloceanspaces.com/images/tcgplayer-logo-full-color-secondary-white.png"
-                                  alt="logo"
-                                />
-                              </Flex>
-                            </Flex>
-                          </React.Fragment>
-                        );
-                      })}
-                  </>
-                ) : (
-                  <>
-                    <Text size="sm" fw={"bold"}>
-                      Prices Not Available
-                    </Text>
-                    <Flex
-                      className={classes.cardImg}
-                      direction={"column"}
-                      gap={5}
-                      onClick={() => {
-                        window.open(
-                          `https://partner.tcgplayer.com/YRkBZm?url=https://www.tcgplayer.com/search/grand-archive/product?q=${dataDetail.name}`,
-                          "_blank",
-                        );
-                      }}
-                    >
-                      <Image
-                        h={16}
-                        src="https://tcg-architect-bucket.nyc3.cdn.digitaloceanspaces.com/images/tcgplayer-logo-full-color-secondary-white.png"
-                        alt="logo"
-                      />
-                    </Flex>
-                  </>
-                )}
+                  <Tabs.Panel
+                    value="Details"
+                    p={5}
+                    style={{
+                      background: "transparent",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <DetailCardModalDetailGA dataDetail={dataDetail} />
+                  </Tabs.Panel>
+                  <Tabs.Panel
+                    value="Price"
+                    p={5}
+                    style={{
+                      background: "transparent",
+                      borderRadius: 20,
+                    }}
+                    w={"100%"}
+                  >
+                    <PriceCardModalDetailGA
+                      dataSet={dataSet}
+                      dataPrice={dataPrice}
+                      name={dataDetail.name}
+                    />
+                  </Tabs.Panel>
+                </Tabs>
               </Flex>
             </Flex>
           ) : (

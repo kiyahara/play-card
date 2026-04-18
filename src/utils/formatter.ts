@@ -21,10 +21,26 @@ const rarityMap: Record<number, string> = {
   9: "Collector Promo Rare",
 };
 
+const shortRarityMap: Record<number, string> = {
+  1: "C",
+  2: "U",
+  3: "R",
+  4: "SR",
+  5: "UR",
+  6: "Promo",
+  7: "CSR",
+  8: "CUR",
+  9: "CPR",
+};
+
 export const rarityTranslate = (number: number) => {
   return rarityMap[number] ?? "Unknown";
 };
 
 export const capitalizeManual = (str: string) => {
   return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
+export const shortRarityTranslate = (number: number) => {
+  return shortRarityMap[number] ?? "Unknown";
 };

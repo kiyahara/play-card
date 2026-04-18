@@ -65,16 +65,19 @@ export default function ManageProductGATabs({
       if (response) {
         const enrichedData = response.data.map(
           (item: DetailCardGrandArchive) => {
-            const group = dataGroup.find((g) =>
-              item.result_editions[0].set.prefix.includes(g.abbreviation),
+            const groups = dataGroup.filter((g) =>
+              item.result_editions.some((edition) =>
+                edition.set.prefix.includes(g.abbreviation),
+              ),
             );
 
             return {
               ...item,
-              dataGroup: group || null,
+              dataGroup: groups.length ? groups : [],
             };
           },
         );
+
         setData((prev) => {
           if (!prev || nextPage === 1)
             return {
@@ -88,10 +91,7 @@ export default function ManageProductGATabs({
           };
         });
 
-        // ✅ clean hasMore logic
-        console.log(response);
         const totalPage = Number(response.total_pages || 0);
-        console.log(totalPage);
         setHasMore(nextPage < totalPage);
       } else {
         setHasMore(false);
