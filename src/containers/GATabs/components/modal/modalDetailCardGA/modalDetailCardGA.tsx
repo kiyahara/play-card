@@ -1,6 +1,7 @@
 import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import {
   DetailCardGrandArchive,
+  DetailOtherOrientationCardGrandArchive,
   DetailProductGAWithPriceInterface,
   EditionGA,
 } from "@/types";
@@ -30,7 +31,10 @@ export function ModalDetailCardGA({
   const [dataPrice, setDataPrice] = useState<
     DetailProductGAWithPriceInterface[]
   >([]);
+  const [dataOtherOrientation, setDataOtherOrientation] =
+    useState<DetailOtherOrientationCardGrandArchive | null>(null);
   const [activeTab, setActiveTab] = useState<string>("Details");
+  const [isFlipped, setIsFlipped] = useState(false);
   const [dataSet, setDataset] = useState<EditionGA | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const { width } = useViewportSize();
@@ -70,6 +74,15 @@ export function ModalDetailCardGA({
     }
   }, [openModal]);
 
+  useEffect(() => {
+    if (dataSet && dataSet.other_orientations.length > 0) {
+      setDataOtherOrientation(dataSet.other_orientations[0]);
+    } else {
+      setDataOtherOrientation(null);
+    }
+    setIsFlipped(false);
+  }, [dataSet]);
+
   return (
     <>
       <ShowLoadingModal isLoading={loading} />
@@ -95,7 +108,10 @@ export function ModalDetailCardGA({
               <ImageCardModalDetailGA
                 dataDetail={dataDetail}
                 dataSet={dataSet}
+                dataOtherOrientation={dataOtherOrientation}
                 setDataset={setDataset}
+                isFlipped={isFlipped}
+                setIsFlipped={setIsFlipped}
               />
 
               <Flex
@@ -142,7 +158,11 @@ export function ModalDetailCardGA({
                       borderRadius: 20,
                     }}
                   >
-                    <DetailCardModalDetailGA dataDetail={dataDetail} />
+                    <DetailCardModalDetailGA
+                      dataDetail={dataDetail}
+                      dataOtherOrientation={dataOtherOrientation}
+                      isFlipped={isFlipped}
+                    />
                   </Tabs.Panel>
                   <Tabs.Panel
                     value="Price"

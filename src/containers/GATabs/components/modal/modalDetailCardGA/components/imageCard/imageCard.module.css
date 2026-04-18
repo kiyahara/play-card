@@ -32,3 +32,89 @@
 .optionSelect[data-selected] {
   background: rgba(255, 255, 255, 0.12) !important;
 }
+
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.flipWrapper {
+  perspective: 1000px;
+}
+
+.flipInner {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 2.5 / 3.5;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.flipBack {
+  transform: rotateY(180deg);
+}
+
+/* Desktop size */
+@media (min-width: 768px) {
+  .flipInner {
+    width: 350px;
+  }
+}
+
+.floatingButton {
+  position: absolute;
+  top: 65%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+
+  border-radius: 999px;
+
+  transition: all 0.15s ease;
+}
+
+/* Hover */
+.floatingButton:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Press effect */
+.floatingButton:active {
+  transform: translateY(-50%) translateY(2px) scale(0.98);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .floatingButton {
+    right: 5px;
+  }
+}

@@ -1,39 +1,45 @@
-import { DetailCardGrandArchive } from "@/types";
+import {
+  DetailCardGrandArchive,
+  DetailOtherOrientationCardGrandArchive,
+} from "@/types";
 import { Flex, Text } from "@mantine/core";
 import { capitalizeManual } from "@/utils";
-import { useViewportSize } from "@mantine/hooks";
 import classes from "./detailCard.module.css";
 
 interface PropsDetailCardModalDetailGATypes {
   dataDetail: DetailCardGrandArchive;
+  dataOtherOrientation: DetailOtherOrientationCardGrandArchive | null;
+  isFlipped: boolean;
 }
 
 export function DetailCardModalDetailGA({
   dataDetail,
+  dataOtherOrientation,
+  isFlipped,
 }: PropsDetailCardModalDetailGATypes) {
-  const { width } = useViewportSize();
-
+  const activeData =
+    dataOtherOrientation && isFlipped ? dataOtherOrientation : dataDetail;
   return (
     <>
       <Flex align="center" gap={6} pt={5}>
         <Flex
           className={classes.elementEffect}
           style={{
-            backgroundImage: `url("https://cdn2.gatcg.com/i/elements/${dataDetail.element.toLowerCase()}.png")`,
+            backgroundImage: `url("https://cdn2.gatcg.com/i/elements/${activeData.element.toLowerCase()}.png")`,
           }}
         />
-        <Text size="md">{dataDetail.name}</Text>
+        <Text size="md">{activeData.name}</Text>
       </Flex>
       <Flex align="center" gap={6}>
         <Flex
           className={classes.typeEffect}
           style={{
-            backgroundImage: `url("https://cdn2.gatcg.com/i/types/${dataDetail.types.includes("ALLY") ? "ally" : "ally"}.png")`,
+            backgroundImage: `url("https://cdn2.gatcg.com/i/types/${activeData.types.includes("ALLY") ? "ally" : "ally"}.png")`,
           }}
         />
         <Text size={"sm"}>
-          {capitalizeManual(dataDetail.types.join(" "))} —{" "}
-          {capitalizeManual(dataDetail.subtypes.join(" "))}
+          {capitalizeManual(activeData.types.join(" "))} —{" "}
+          {capitalizeManual(activeData.subtypes.join(" "))}
         </Text>
       </Flex>
       <Text size="lg" fw={"bold"} pt={5}>
@@ -41,16 +47,16 @@ export function DetailCardModalDetailGA({
       </Text>
       <Flex
         dangerouslySetInnerHTML={{
-          __html: dataDetail.effect_raw.replace(/\n/g, "<br />"),
+          __html: activeData.effect_raw.replace(/\n/g, "<br />"),
         }}
       />
       <Text size="lg" fw={"bold"} pt={5}>
         Flavor Text :{" "}
       </Text>
-      {dataDetail.flavor ? (
+      {activeData.flavor ? (
         <Flex
           dangerouslySetInnerHTML={{
-            __html: dataDetail.flavor.replace(/\n/g, "<br />"),
+            __html: activeData.flavor.replace(/\n/g, "<br />"),
           }}
         />
       ) : (
