@@ -8,7 +8,7 @@ import { shortRarityTranslate } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./imageCard.module.css";
 import { IconRepeat } from "@tabler/icons-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface PropsImageCardModalDetailGATypes {
   dataDetail: DetailCardGrandArchive;

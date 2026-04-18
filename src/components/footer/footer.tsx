@@ -1,9 +1,8 @@
 import { AppShell, Flex, Text, ActionIcon } from "@mantine/core";
 import {
-  IconBrandDiscordFilled,
   IconBrandFacebookFilled,
+  IconBrandGithubFilled,
   IconBrandInstagram,
-  IconMail,
 } from "@tabler/icons-react";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -32,20 +31,36 @@ export function Footer() {
           align={"center"}
           w={"100%"}
           py={5}
+          px={10}
         >
           <Text size="xs">©2026 Fenri Mintardja - Play Card</Text>
           <Flex>
-            <ActionIcon bg={"black"}>
-              <IconBrandDiscordFilled size={15} scale={2.5} />
-            </ActionIcon>
-            <ActionIcon bg={"black"}>
+            <ActionIcon
+              bg={"black"}
+              onClick={() =>
+                window.open(
+                  "https://www.facebook.com/fenri.mintardja",
+                  "_blank",
+                )
+              }
+            >
               <IconBrandFacebookFilled size={15} scale={2.5} />
             </ActionIcon>
-            <ActionIcon bg={"black"}>
+            <ActionIcon
+              bg={"black"}
+              onClick={() =>
+                window.open("https://www.instagram.com/fenri_min/", "_blank")
+              }
+            >
               <IconBrandInstagram size={15} scale={2.5} />
             </ActionIcon>
-            <ActionIcon bg={"black"}>
-              <IconMail size={15} scale={2.5} />
+            <ActionIcon
+              bg={"black"}
+              onClick={() =>
+                window.open("https://github.com/kiyahara/play-card", "_blank")
+              }
+            >
+              <IconBrandGithubFilled size={15} scale={2.5} />
             </ActionIcon>
           </Flex>
         </Flex>

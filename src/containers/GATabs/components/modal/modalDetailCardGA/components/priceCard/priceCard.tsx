@@ -1,12 +1,7 @@
-import {
-  DetailCardGrandArchive,
-  DetailProductGAWithPriceInterface,
-  EditionGA,
-} from "@/types";
+import { DetailProductGAWithPriceInterface, EditionGA } from "@/types";
 import { Flex, Image, Text } from "@mantine/core";
 import moment from "moment";
 import classes from "./priceCard.module.css";
-import React from "react";
 import { rarityTranslate } from "@/utils";
 
 interface PropsPriceCardModalDetailGATypes {
@@ -32,7 +27,7 @@ export function PriceCardModalDetailGA({
         All Available Pricing :
       </Text>
 
-      <Text size="sm" ta="center" w="100%">
+      <Text size="sm" ta="start" w="100%">
         Last Modified On :{" "}
         {dataPrice.length > 0
           ? moment(dataPrice[0].modifiedOn).format("DD/MM/YYYY")
