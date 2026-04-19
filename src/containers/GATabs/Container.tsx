@@ -1,11 +1,7 @@
 import Manage from "./Manage";
 
-interface ContainerProductTabs {
-  setLoading: (_value: boolean) => void;
-}
-
-const Container = ({ setLoading }: ContainerProductTabs) => {
-  return <Manage setLoading={setLoading} />;
+const Container = () => {
+  return <Manage />;
 };
 
 export default Container;

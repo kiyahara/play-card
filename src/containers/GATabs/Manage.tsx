@@ -1,28 +1,16 @@
 "use client";
 import { Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
-import { GaService, marketGAService } from "@/api/services";
+import { GaService } from "@/api/services";
 import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
-import {
-  DataGroupGAInterface,
-  DetailCardGrandArchive,
-  Params,
-  ResponseGrandArchive,
-} from "@/types";
+import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
 import { ContentCardGA, ModalDetailCardGA } from "./components";
 import useBoundStore from "@/store";
 
-interface ProductGATabsInterface {
-  setLoading: (_value: boolean) => void;
-}
-
-export default function ManageProductGATabs({
-  setLoading,
-}: ProductGATabsInterface) {
+export default function ManageProductGATabs() {
   const [data, setData] = useState<ResponseGrandArchive | null>(null);
-  const [dataGroup, setDataGroup] = useState<DataGroupGAInterface[]>([]);
   const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
     null,
   );
@@ -30,7 +18,7 @@ export default function ManageProductGATabs({
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
-  const { search } = useBoundStore().generalStoreData;
+  const { search, dataGroup, setLoading } = useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
   const isLaptop = width <= 1400;
@@ -105,23 +93,6 @@ export default function ManageProductGATabs({
       isTriggeringRef.current = false;
     }
   }
-
-  async function getGroupProductGA() {
-    setLoading(true);
-    try {
-      const response = await marketGAService.getGroupsByCategoryId(74);
-
-      if (response) {
-        setDataGroup(response);
-      }
-    } catch (error) {
-      errorNotification(error);
-    }
-  }
-
-  useEffect(() => {
-    getGroupProductGA();
-  }, []);
 
   useEffect(() => {
     if (dataGroup.length > 0) {

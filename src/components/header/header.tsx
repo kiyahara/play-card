@@ -8,7 +8,6 @@ import useBoundStore from "@/store";
 
 export function Navbar() {
   const { searchInput, setSearchInput } = useBoundStore().generalStoreData;
-
   const { width } = useViewportSize();
   const isMobile = width <= 768;
 
