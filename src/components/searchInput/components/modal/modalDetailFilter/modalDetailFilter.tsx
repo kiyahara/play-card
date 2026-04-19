@@ -20,7 +20,7 @@ export function ModalDetailFilterGA({
   openModal,
   setOpenModal,
 }: PropsModalDetailCardGATypes) {
-  const { setLoading } = useBoundStore().generalStoreData;
+  const { setLoading, setFilterData } = useBoundStore().generalStoreData;
   const [tempFilterData, setTempFilterData] =
     useState<InputFilterProductsInterface>({
       name: "",
@@ -91,6 +91,7 @@ export function ModalDetailFilterGA({
     console.log(
       ` ${tempFilterData.name} ${tempFilterData.sets} ${tempFilterData.element}`,
     );
+    setFilterData(tempFilterData);
     setTempFilterData({
       name: "",
       sets: [],
