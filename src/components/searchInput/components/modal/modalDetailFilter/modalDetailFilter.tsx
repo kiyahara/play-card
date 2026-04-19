@@ -21,12 +21,14 @@ export function ModalDetailFilterGA({
   setOpenModal,
 }: PropsModalDetailCardGATypes) {
   const { setLoading, setFilterData } = useBoundStore().generalStoreData;
+
   const [tempFilterData, setTempFilterData] =
     useState<InputFilterProductsInterface>({
       name: "",
       sets: [],
       element: [],
     });
+
   const filterFields: {
     key: keyof InputFilterProductsInterface;
     label: string;
@@ -36,8 +38,10 @@ export function ModalDetailFilterGA({
     { key: "sets", label: "Sets", placeholder: 'e.g. "Set 1"' },
     { key: "element", label: "Elements", placeholder: 'e.g. "Fire"' },
   ];
+
   const [dataOption, setDataOption] =
     useState<GrandArchiveFilterOptionsInterace | null>(null);
+
   const { width } = useViewportSize();
   const isMobile = width <= 768;
 
@@ -56,25 +60,27 @@ export function ModalDetailFilterGA({
     }
   }
 
+  useEffect(() => {
+    if (dataOption == null && openModal) {
+      getOptionData();
+    }
+  }, [openModal]);
+
   function getSelectData(key: keyof InputFilterProductsInterface) {
     if (!dataOption) return [];
 
     switch (key) {
       case "sets":
-        return (
-          dataOption.set.map((item) => ({
-            value: item.value,
-            label: item.text,
-          })) || []
-        );
+        return dataOption.set.map((item) => ({
+          value: item.value,
+          label: item.text,
+        }));
 
       case "element":
-        return (
-          dataOption.element.map((item) => ({
-            value: item.value,
-            label: item.text,
-          })) || []
-        );
+        return dataOption.element.map((item) => ({
+          value: item.value,
+          label: item.text,
+        }));
 
       default:
         return [];
@@ -82,23 +88,45 @@ export function ModalDetailFilterGA({
   }
 
   useEffect(() => {
-    if (dataOption == null && openModal) {
-      getOptionData();
+    if (openModal) {
+      if (!window.history.state?.modal) {
+        window.history.pushState({ modal: true }, "");
+      }
     }
   }, [openModal]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      if (openModal) {
+        setOpenModal(false);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [openModal]);
+
   function SubmitData() {
-    console.log(
-      ` ${tempFilterData.name} ${tempFilterData.sets} ${tempFilterData.element}`,
-    );
     setFilterData(tempFilterData);
     setTempFilterData({
       name: "",
       sets: [],
       element: [],
     });
-    setOpenModal(false);
+
+    handleClose();
   }
+
+  const handleClose = () => {
+    setOpenModal(false);
+
+    if (window.history.state?.modal) {
+      window.history.back();
+    }
+  };
 
   return (
     <>
@@ -106,7 +134,7 @@ export function ModalDetailFilterGA({
         <ModalUniversal
           opened={openModal}
           title={"Search"}
-          close={() => setOpenModal(false)}
+          close={handleClose}
           size={isMobile ? "100%" : "70%"}
         >
           {filterFields.map((field) => (
@@ -178,6 +206,7 @@ export function ModalDetailFilterGA({
               )}
             </Flex>
           ))}
+
           <Flex justify="flex-end" mt="md">
             <Button onClick={SubmitData} className={classes.buttonPrimary}>
               Simpan
