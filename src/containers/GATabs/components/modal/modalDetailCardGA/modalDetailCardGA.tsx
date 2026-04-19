@@ -42,7 +42,6 @@ export function ModalDetailCardGA({
 
   async function getPriceByGroupId(dataForDetail: DetailCardGrandArchive) {
     setLoading(true);
-    console.log(dataDetail);
     try {
       const groupIds = dataForDetail.dataGroup.map((e) => e.groupId);
       const response = await marketGAService.getPriceByGroupId(
@@ -83,14 +82,46 @@ export function ModalDetailCardGA({
     setIsFlipped(false);
   }, [dataSet]);
 
+  useEffect(() => {
+    if (openModal) {
+      if (!window.history.state?.modal) {
+        window.history.pushState({ modal: true }, "");
+      }
+    }
+  }, [openModal]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (openModal) {
+        setOpenModal(false);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [openModal]);
+
+  const handleClose = () => {
+    setOpenModal(false);
+
+    // hanya back kalau state kita modal
+    if (window.history.state?.modal) {
+      window.history.back();
+    }
+  };
+
   return (
     <>
       <ShowLoadingModal isLoading={loading} />
+
       {!loading ? (
         <ModalUniversal
           opened={openModal}
           title={null}
-          close={() => setOpenModal(false)}
+          close={handleClose}
           size={isMobile ? "100%" : "70%"}
         >
           {dataDetail && dataSet ? (
@@ -130,14 +161,14 @@ export function ModalDetailCardGA({
                   c="white"
                   style={{
                     width: "100%",
-                    flex: 1, // 🔥 ini kunci
+                    flex: 1,
                   }}
                   styles={{
                     tab: {
                       borderWidth: "2px",
                     },
                     list: {
-                      borderBottomWidth: "2px", // garis bawah juga ikut tebal
+                      borderBottomWidth: "2px",
                     },
                   }}
                 >
@@ -150,29 +181,15 @@ export function ModalDetailCardGA({
                     </Tabs.Tab>
                   </Tabs.List>
 
-                  <Tabs.Panel
-                    value="Details"
-                    p={5}
-                    style={{
-                      background: "transparent",
-                      borderRadius: 20,
-                    }}
-                  >
+                  <Tabs.Panel value="Details" p={5}>
                     <DetailCardModalDetailGA
                       dataDetail={dataDetail}
                       dataOtherOrientation={dataOtherOrientation}
                       isFlipped={isFlipped}
                     />
                   </Tabs.Panel>
-                  <Tabs.Panel
-                    value="Price"
-                    p={5}
-                    style={{
-                      background: "transparent",
-                      borderRadius: 20,
-                    }}
-                    w={"100%"}
-                  >
+
+                  <Tabs.Panel value="Price" p={5} w={"100%"}>
                     <PriceCardModalDetailGA
                       dataSet={dataSet}
                       dataPrice={dataPrice}
@@ -182,13 +199,9 @@ export function ModalDetailCardGA({
                 </Tabs>
               </Flex>
             </Flex>
-          ) : (
-            ""
-          )}
+          ) : null}
         </ModalUniversal>
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 }
