@@ -28,8 +28,9 @@ const generalStore: StateCreator<TypeGeneralSession> = (set) => ({
     loading: false,
     filterData: {
       name: "",
+      effect: "",
       sets: [],
-      element: [],
+      elements: [],
     },
     setDataGroup: (_value: DataGroupGAInterface[]) => {
       set((state) => ({

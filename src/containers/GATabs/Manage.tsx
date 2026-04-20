@@ -4,7 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { GaService } from "@/api/services";
 import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
-import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
+import {
+  DetailCardGrandArchive,
+  InputFilterProductsInterface,
+  Params,
+  ResponseGrandArchive,
+} from "@/types";
 import { LoadMoreIndicator } from "@/components";
 import { ContentCardGA, ModalDetailCardGA } from "./components";
 import useBoundStore from "@/store";
@@ -18,7 +23,8 @@ export default function ManageProductGATabs() {
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
-  const { search, dataGroup, setLoading } = useBoundStore().generalStoreData;
+  const { filterData, search, dataGroup, setLoading } =
+    useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
   const isLaptop = width <= 1400;
@@ -46,6 +52,9 @@ export default function ManageProductGATabs() {
         pageSize: 15,
         name: "" + search,
         page: nextPage,
+        sets: filterData.sets,
+        elements: filterData.elements,
+        effect: filterData.effect,
       };
 
       const response = await GaService.getAllDataCardGA(Param);
@@ -109,7 +118,7 @@ export default function ManageProductGATabs() {
 
       getListAllCard(1);
     }
-  }, [search, dataGroup]);
+  }, [search, dataGroup, filterData]);
 
   useEffect(() => {
     if (!loadMoreRef.current || !hasMore) return;
@@ -167,10 +176,32 @@ export default function ManageProductGATabs() {
           </Text>
 
           {data && (
-            <Text size="sm" c="white">
-              Showing 1 - {data.paginated_cards_count} of {data.total_cards}{" "}
-              total cards...
-            </Text>
+            <>
+              <Text size="sm" c="white">
+                Showing 1 - {data.paginated_cards_count} of {data.total_cards}{" "}
+                total cards...
+              </Text>
+              {(
+                Object.entries(filterData) as [
+                  keyof InputFilterProductsInterface,
+                  InputFilterProductsInterface[keyof InputFilterProductsInterface],
+                ][]
+              ).map(([key, value], index) => {
+                console.log(key);
+                console.log(value);
+                return (
+                  <React.Fragment key={index}>
+                    {value && value.length > 0 ? (
+                      <Text size="xs"></Text>
+                    ) : key == "name" && search != "" ? (
+                      <Text size="xs">The </Text>
+                    ) : (
+                      ""
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </>
           )}
 
           <SimpleGrid

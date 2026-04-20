@@ -19,6 +19,7 @@ export function DetailCardModalDetailGA({
 }: PropsDetailCardModalDetailGATypes) {
   const activeData =
     dataOtherOrientation && isFlipped ? dataOtherOrientation : dataDetail;
+
   return (
     <>
       <Flex align="center" gap={6} pt={5}>
@@ -30,14 +31,14 @@ export function DetailCardModalDetailGA({
         />
         <Text size="md">{activeData.name}</Text>
       </Flex>
-      <Flex align="center" gap={6}>
+      <Flex align="center" gap={6} pt={10}>
         <Flex
           className={classes.typeEffect}
           style={{
             backgroundImage: `url("https://cdn2.gatcg.com/i/types/${activeData.types.includes("ALLY") ? "ally" : "ally"}.png")`,
           }}
         />
-        <Text size={"sm"}>
+        <Text size={"sm"} pt={3}>
           {capitalizeManual(activeData.types.join(" "))} —{" "}
           {capitalizeManual(activeData.subtypes.join(" "))}
         </Text>

@@ -4,4 +4,7 @@ export interface Params {
   name?: string;
   num?: number;
   offset?: number;
+  effect?: string;
+  elements?: string[];
+  sets?: string[];
 }

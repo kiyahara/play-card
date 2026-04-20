@@ -8,8 +8,14 @@ import {
 import { errorNotification } from "@/utils";
 import { Button, Flex, MultiSelect, Text, TextInput } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import classes from "./modalDetailFilter.module.css";
+import {
+  IconBook,
+  IconBrandNationalGeographic,
+  IconCards,
+  IconCell,
+} from "@tabler/icons-react";
 
 interface PropsModalDetailCardGATypes {
   openModal: boolean;
@@ -25,18 +31,46 @@ export function ModalDetailFilterGA({
   const [tempFilterData, setTempFilterData] =
     useState<InputFilterProductsInterface>({
       name: "",
+      effect: "",
       sets: [],
-      element: [],
+      elements: [],
     });
 
   const filterFields: {
     key: keyof InputFilterProductsInterface;
     label: string;
     placeholder: string;
+    isMulti: boolean;
+    icon: ReactNode;
   }[] = [
-    { key: "name", label: "Name", placeholder: 'e.g. "Genbu"' },
-    { key: "sets", label: "Sets", placeholder: 'e.g. "Set 1"' },
-    { key: "element", label: "Elements", placeholder: 'e.g. "Fire"' },
+    {
+      key: "name",
+      label: "Name",
+      placeholder: 'e.g. "Genbu..."',
+      isMulti: false,
+      icon: <IconBrandNationalGeographic size={20} scale={2.5} />,
+    },
+    {
+      key: "sets",
+      label: "Sets",
+      placeholder: 'e.g. "RDO..."',
+      isMulti: true,
+      icon: <IconCards size={20} scale={2.5} />,
+    },
+    {
+      key: "elements",
+      label: "Elements",
+      placeholder: 'e.g. "Fire..."',
+      isMulti: true,
+      icon: <IconCell size={20} scale={2.5} />,
+    },
+    {
+      key: "effect",
+      label: "Effect",
+      placeholder: 'e.g. "Floating Memory..."',
+      isMulti: false,
+      icon: <IconBook size={20} scale={2.5} />,
+    },
   ];
 
   const [dataOption, setDataOption] =
@@ -76,7 +110,7 @@ export function ModalDetailFilterGA({
           label: item.text,
         }));
 
-      case "element":
+      case "elements":
         return dataOption.element.map((item) => ({
           value: item.value,
           label: item.text,
@@ -87,6 +121,7 @@ export function ModalDetailFilterGA({
     }
   }
 
+  // biar pas pencet backButton yang ketutup modalnya
   useEffect(() => {
     if (openModal) {
       if (!window.history.state?.modal) {
@@ -101,7 +136,7 @@ export function ModalDetailFilterGA({
         setOpenModal(false);
       }
     };
-
+    // bkn nama random "event" resmi dari browser
     window.addEventListener("popstate", handlePopState);
 
     return () => {
@@ -113,8 +148,9 @@ export function ModalDetailFilterGA({
     setFilterData(tempFilterData);
     setTempFilterData({
       name: "",
+      effect: "",
       sets: [],
-      element: [],
+      elements: [],
     });
 
     handleClose();
@@ -140,15 +176,20 @@ export function ModalDetailFilterGA({
           {filterFields.map((field) => (
             <Flex
               key={field.key}
+              direction={isMobile ? "column" : "row"}
               justify={"space-between"}
-              align={"center"}
-              mb={8}
+              align={isMobile ? "start" : "center"}
+              mb={10}
+              gap={5}
             >
-              <Text size="xs">{field.label}</Text>
+              <Flex align={"center"} justify={"center"} gap={5}>
+                {field.icon}
+                <Text size="xs">{field.label}</Text>
+              </Flex>
 
-              {field.label === "Name" ? (
+              {!field.isMulti ? (
                 <TextInput
-                  w="75%"
+                  w={isMobile ? "100%" : "75%"}
                   placeholder={field.placeholder}
                   size="xs"
                   value={tempFilterData[field.key]}
@@ -164,8 +205,12 @@ export function ModalDetailFilterGA({
                 />
               ) : (
                 <MultiSelect
-                  w="75%"
-                  placeholder={field.placeholder}
+                  w={isMobile ? "100%" : "75%"}
+                  placeholder={
+                    (tempFilterData[field.key]?.length ?? 0) > 0
+                      ? ""
+                      : field.placeholder
+                  }
                   size="xs"
                   data={getSelectData(field.key)}
                   value={tempFilterData[field.key] as string[]}
@@ -183,7 +228,7 @@ export function ModalDetailFilterGA({
                   }}
                   renderOption={({ option }) => (
                     <>
-                      {field.key == "element" ? (
+                      {field.key == "elements" ? (
                         <Flex align="center" gap={8}>
                           <Flex
                             className={classes.elementEffect}
