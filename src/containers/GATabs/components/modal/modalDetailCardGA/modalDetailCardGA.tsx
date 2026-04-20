@@ -184,6 +184,7 @@ export function ModalDetailCardGA({
                   <Tabs.Panel value="Details" p={5}>
                     <DetailCardModalDetailGA
                       dataDetail={dataDetail}
+                      dataSet={dataSet}
                       dataOtherOrientation={dataOtherOrientation}
                       isFlipped={isFlipped}
                     />

@@ -47,6 +47,7 @@ export interface CirculationGA {
 
 export interface EditionGA {
   card_id: string;
+  dataGroup?: DataGroupGAInterface;
   collector_number: string;
   configuration: string;
   created_at: Date;

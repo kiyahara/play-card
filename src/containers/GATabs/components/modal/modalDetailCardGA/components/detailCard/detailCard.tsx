@@ -1,6 +1,7 @@
 import {
   DetailCardGrandArchive,
   DetailOtherOrientationCardGrandArchive,
+  EditionGA,
 } from "@/types";
 import { Flex, Text } from "@mantine/core";
 import { capitalizeManual } from "@/utils";
@@ -8,12 +9,14 @@ import classes from "./detailCard.module.css";
 
 interface PropsDetailCardModalDetailGATypes {
   dataDetail: DetailCardGrandArchive;
+  dataSet: EditionGA;
   dataOtherOrientation: DetailOtherOrientationCardGrandArchive | null;
   isFlipped: boolean;
 }
 
 export function DetailCardModalDetailGA({
   dataDetail,
+  dataSet,
   dataOtherOrientation,
   isFlipped,
 }: PropsDetailCardModalDetailGATypes) {
@@ -54,12 +57,8 @@ export function DetailCardModalDetailGA({
       <Text size="lg" fw={"bold"} pt={5}>
         Flavor Text :{" "}
       </Text>
-      {activeData.flavor ? (
-        <Flex
-          dangerouslySetInnerHTML={{
-            __html: activeData.flavor.replace(/\n/g, "<br />"),
-          }}
-        />
+      {dataSet.flavor && dataSet.flavor != "" ? (
+        <Text size={"md"}>{dataSet.flavor}</Text>
       ) : (
         <Text size={"sm"}>No flavor text available</Text>
       )}

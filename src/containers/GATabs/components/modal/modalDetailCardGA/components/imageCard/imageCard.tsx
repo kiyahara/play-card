@@ -29,7 +29,6 @@ export function ImageCardModalDetailGA({
 }: PropsImageCardModalDetailGATypes) {
   const { width } = useViewportSize();
   const isMobile = width <= 768;
-
   return (
     <Flex direction="column" align="center" w="100%" gap={10}>
       <Select
@@ -40,13 +39,22 @@ export function ImageCardModalDetailGA({
           value: "" + valueEditionGA.uuid,
         }))}
         value={dataSet.uuid}
-        onChange={(e) =>
-          setDataset(
-            dataDetail.result_editions.find(
-              (valueDetail) => valueDetail.uuid == e,
-            ),
-          )
-        }
+        onChange={(e) => {
+          const found = dataDetail.result_editions.find(
+            (valueDetail) => valueDetail.uuid == e,
+          );
+
+          if (!found) return; // ⛔ penting
+
+          const foundGroup = dataDetail.dataGroup.find((valueGroup) =>
+            found.set?.name?.includes(valueGroup.name),
+          );
+
+          setDataset({
+            ...found,
+            dataGroup: foundGroup,
+          });
+        }}
         w="100%"
         classNames={{
           input: classes.inputSelect,

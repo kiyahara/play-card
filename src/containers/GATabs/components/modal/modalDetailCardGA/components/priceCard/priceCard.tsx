@@ -18,7 +18,8 @@ export function PriceCardModalDetailGA({
   const filteredPrice = dataPrice?.filter(
     (valuePrice) =>
       valuePrice.extNumber === dataSet.collector_number &&
-      valuePrice.extRarity == rarityTranslate(dataSet.rarity),
+      valuePrice.extRarity == rarityTranslate(dataSet.rarity) &&
+      valuePrice.groupId == dataSet.dataGroup?.groupId,
   );
 
   return (
