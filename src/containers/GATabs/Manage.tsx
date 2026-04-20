@@ -2,7 +2,7 @@
 import { Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 import { GaService } from "@/api/services";
-import { errorNotification } from "@/utils";
+import { capitalizeManual, errorNotification, formatWithOr } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import {
   DetailCardGrandArchive,
@@ -189,12 +189,27 @@ export default function ManageProductGATabs() {
               ).map(([key, value], index) => {
                 console.log(key);
                 console.log(value);
+                console.log(search);
                 return (
                   <React.Fragment key={index}>
-                    {value && value.length > 0 ? (
-                      <Text size="xs"></Text>
-                    ) : key == "name" && search != "" ? (
-                      <Text size="xs">The </Text>
+                    {typeof value === "string" && value.length > 0 ? (
+                      <>
+                        <Text size="sm">
+                          The {capitalizeManual(key)} includes{" "}
+                        </Text>
+                        <Text size="xs" c={"#EF4444"}>
+                          {value}
+                        </Text>
+                      </>
+                    ) : Array.isArray(value) && value.length > 0 ? (
+                      <>
+                        <Text size="sm">
+                          The {capitalizeManual(key)} includes{" "}
+                        </Text>
+                        <Text size="xs" c={"#EF4444"}>
+                          {formatWithOr(value)}
+                        </Text>
+                      </>
                     ) : (
                       ""
                     )}

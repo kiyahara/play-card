@@ -44,3 +44,11 @@ export const capitalizeManual = (str: string) => {
 export const shortRarityTranslate = (number: number) => {
   return shortRarityMap[number] ?? "Unknown";
 };
+
+export const formatWithOr = (arr: string[]) => {
+  if (arr.length === 0) return "";
+  if (arr.length === 1) return arr[0];
+  if (arr.length === 2) return arr.join(" or ");
+
+  return `${arr.slice(0, -1).join(", ")} or ${arr[arr.length - 1]}`;
+};

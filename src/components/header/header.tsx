@@ -32,7 +32,7 @@ export function Navbar() {
                 radius="md"
                 h={isMobile ? 50 : 80}
                 w={isMobile ? 100 : 200}
-                src="/TextLogoV3.png"
+                src="/TextLogoV4.png"
                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 alt="logo"
                 style={{ cursor: "pointer", display: "block" }}

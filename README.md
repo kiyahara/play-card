@@ -1,6 +1,6 @@
 ## WELCOME TO MY PLAY-CARD REPOSITORY
 
-This is my Next.Js Project named [Play-Card](https://play-card-chi.vercel.app/home) using named NEXUS X TCG - Indonesia Market Place.
+This is my Next.Js Project named [Play-Card](https://play-card-chi.vercel.app/home) using named GAArchive - Archive For GA Player.
 You can try it to visit the website by click link above! (Mobile/Web)
 
 ## Why I'm making this?
