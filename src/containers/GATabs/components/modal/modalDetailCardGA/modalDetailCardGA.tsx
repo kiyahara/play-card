@@ -55,6 +55,7 @@ export function ModalDetailCardGA({
       }
     } catch (error) {
       errorNotification(error);
+      handleClose();
     } finally {
       setLoading(false);
     }

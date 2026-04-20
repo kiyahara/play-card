@@ -89,6 +89,7 @@ export function ModalDetailFilterGA({
       }
     } catch (error) {
       errorNotification(error);
+      handleClose();
     } finally {
       setLoading(false);
     }
