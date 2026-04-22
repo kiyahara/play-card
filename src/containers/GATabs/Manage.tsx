@@ -2,16 +2,15 @@
 import { Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 import { GaService } from "@/api/services";
-import { capitalizeManual, errorNotification, formatWithOr } from "@/utils";
+import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
-import {
-  DetailCardGrandArchive,
-  InputFilterProductsInterface,
-  Params,
-  ResponseGrandArchive,
-} from "@/types";
+import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
-import { ContentCardGA, ModalDetailCardGA } from "./components";
+import {
+  ContentCardGA,
+  ModalDetailCardGA,
+  ShowingFilterData,
+} from "./components";
 import useBoundStore from "@/store";
 
 export default function ManageProductGATabs() {
@@ -55,6 +54,8 @@ export default function ManageProductGATabs() {
         sets: filterData.sets,
         elements: filterData.elements,
         effect: filterData.effect,
+        legality_format: filterData.legality_format,
+        legality_state: filterData.legality_state,
       };
 
       const response = await GaService.getAllDataCardGA(Param);
@@ -175,49 +176,7 @@ export default function ManageProductGATabs() {
             Summary
           </Text>
 
-          {data && (
-            <>
-              <Text size="sm" c="white">
-                Showing 1 - {data.paginated_cards_count} of {data.total_cards}{" "}
-                total cards...
-              </Text>
-              {(
-                Object.entries(filterData) as [
-                  keyof InputFilterProductsInterface,
-                  InputFilterProductsInterface[keyof InputFilterProductsInterface],
-                ][]
-              ).map(([key, value], index) => {
-                console.log(key);
-                console.log(value);
-                console.log(search);
-                return (
-                  <React.Fragment key={index}>
-                    {typeof value === "string" && value.length > 0 ? (
-                      <>
-                        <Text size="sm">
-                          The {capitalizeManual(key)} includes{" "}
-                        </Text>
-                        <Text size="xs" c={"#EF4444"}>
-                          {value}
-                        </Text>
-                      </>
-                    ) : Array.isArray(value) && value.length > 0 ? (
-                      <>
-                        <Text size="sm">
-                          The {capitalizeManual(key)} includes{" "}
-                        </Text>
-                        <Text size="xs" c={"#EF4444"}>
-                          {formatWithOr(value)}
-                        </Text>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </>
-          )}
+          <ShowingFilterData data={data} filterData={filterData} />
 
           <SimpleGrid
             cols={isMobile ? 1 : isLaptop ? 3 : 4}

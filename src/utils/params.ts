@@ -9,6 +9,8 @@ export function generateSearchParams({
   elements,
   sets,
   effect,
+  legality_format,
+  legality_state,
 }: Params): string {
   const result: string[] = [];
   if (
@@ -19,7 +21,9 @@ export function generateSearchParams({
     !offset &&
     !elements &&
     !sets &&
-    !effect
+    !effect &&
+    !legality_format &&
+    !legality_state
   ) {
     return "";
   }
@@ -47,6 +51,12 @@ export function generateSearchParams({
   }
   if (effect) {
     result.push(`effect=${effect}`);
+  }
+  if (legality_format) {
+    result.push(`legality_format=${legality_format}`);
+  }
+  if (legality_state) {
+    result.push(`legality_state=${legality_state}`);
   }
 
   return result.join("&");

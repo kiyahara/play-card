@@ -31,6 +31,10 @@ const generalStore: StateCreator<TypeGeneralSession> = (set) => ({
       effect: "",
       sets: [],
       elements: [],
+      format: {
+        legality_format: "",
+        legality_state: "",
+      },
     },
     setDataGroup: (_value: DataGroupGAInterface[]) => {
       set((state) => ({

@@ -1,10 +1,12 @@
 export interface Params {
   page?: number;
   pageSize?: number;
-  name?: string;
   num?: number;
   offset?: number;
+  name?: string;
   effect?: string;
+  legality_format?: string;
+  legality_state?: string;
   elements?: string[];
   sets?: string[];
 }

@@ -1,0 +1,104 @@
+.inputGlass {
+  color: white;
+  background: #1a1b1e; /* solid dark */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.inputGlass:focus-within {
+  border-color: #4c6ef5; /* accent Mantine default */
+  box-shadow: 0 0 0 1px #4c6ef5;
+}
+
+/* dropdown */
+.dropdownGlass {
+  background: #1a1b1e; /* solid */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* option */
+.optionGlass {
+  color: white;
+  padding: 6px 10px;
+}
+
+.optionGlass:hover,
+.optionGlass[data-hovered] {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.optionGlass[data-selected] {
+  background: #364fc7; /* accent */
+  color: white;
+}
+
+/* empty state */
+.emptyGlass {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.elementEffect {
+  /* background-image: url(https://cdn2.gatcg.com/i/elements/water.png); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: help;
+  height: 21.3333px;
+  width: 21.3333px;
+}
+.glass-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+/* checked */
+.glass-radio[data-checked] {
+  border: 2px solid #228be6;
+  box-shadow: 0 0 6px rgba(34, 139, 230, 0.5);
+}
+
+/* 🔥 disabled (lebih gelap & redup) */
+.glass-radio:disabled {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* kalau disabled + checked */
+.glass-radio[data-checked]:disabled {
+  border: 2px solid rgba(34, 139, 230, 0.4);
+  box-shadow: none;
+}
+
+/* dot */
+.glass-dot {
+  background-color: #228be6;
+}
+
+/* dot kalau disabled */
+.glass-radio:disabled + * .glass-dot {
+  background-color: rgba(34, 139, 230, 0.4);
+}
+
+/* label */
+.glass-label {
+  padding-left: 6px;
+  font-size: 12px;
+  color: white;
+}
+
+/* label disabled */
+.glass-label[data-disabled] {
+  color: rgba(255, 255, 255, 0.5);
+}

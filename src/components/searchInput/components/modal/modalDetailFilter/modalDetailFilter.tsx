@@ -3,19 +3,22 @@ import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import useBoundStore from "@/store";
 import {
   GrandArchiveFilterOptionsInterace,
+  InputFieldDetailSearchInterface,
   InputFilterProductsInterface,
 } from "@/types";
 import { errorNotification } from "@/utils";
-import { Button, Flex, MultiSelect, Text, TextInput } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./modalDetailFilter.module.css";
 import {
   IconBook,
   IconBrandNationalGeographic,
   IconCards,
   IconCell,
+  IconScaleFilled,
 } from "@tabler/icons-react";
+import { InputFieldDetailFilterGA } from "./component";
 
 interface PropsModalDetailCardGATypes {
   openModal: boolean;
@@ -34,20 +37,17 @@ export function ModalDetailFilterGA({
       effect: "",
       sets: [],
       elements: [],
+      legality_format: "",
+      legality_state: "",
     });
 
-  const filterFields: {
-    key: keyof InputFilterProductsInterface;
-    label: string;
-    placeholder: string;
-    isMulti: boolean;
-    icon: ReactNode;
-  }[] = [
+  const filterFields: InputFieldDetailSearchInterface[] = [
     {
       key: "name",
       label: "Name",
       placeholder: 'e.g. "Genbu..."',
       isMulti: false,
+      isSelect: false,
       icon: <IconBrandNationalGeographic size={20} scale={2.5} />,
     },
     {
@@ -55,6 +55,7 @@ export function ModalDetailFilterGA({
       label: "Sets",
       placeholder: 'e.g. "RDO..."',
       isMulti: true,
+      isSelect: false,
       icon: <IconCards size={20} scale={2.5} />,
     },
     {
@@ -62,6 +63,7 @@ export function ModalDetailFilterGA({
       label: "Elements",
       placeholder: 'e.g. "Fire..."',
       isMulti: true,
+      isSelect: false,
       icon: <IconCell size={20} scale={2.5} />,
     },
     {
@@ -69,7 +71,16 @@ export function ModalDetailFilterGA({
       label: "Effect",
       placeholder: 'e.g. "Floating Memory..."',
       isMulti: false,
+      isSelect: false,
       icon: <IconBook size={20} scale={2.5} />,
+    },
+    {
+      key: "legality_format",
+      label: "Format",
+      placeholder: 'e.g. "Standard..."',
+      isMulti: false,
+      isSelect: true,
+      icon: <IconScaleFilled size={20} scale={2.5} />,
     },
   ];
 
@@ -97,6 +108,7 @@ export function ModalDetailFilterGA({
 
   useEffect(() => {
     if (dataOption == null && openModal) {
+      console.log(tempFilterData);
       getOptionData();
     }
   }, [openModal]);
@@ -113,6 +125,11 @@ export function ModalDetailFilterGA({
 
       case "elements":
         return dataOption.element.map((item) => ({
+          value: item.value,
+          label: item.text,
+        }));
+      case "legality_format":
+        return dataOption.gameFormat.map((item) => ({
           value: item.value,
           label: item.text,
         }));
@@ -147,19 +164,20 @@ export function ModalDetailFilterGA({
 
   function SubmitData() {
     setFilterData(tempFilterData);
-    setTempFilterData({
-      name: "",
-      effect: "",
-      sets: [],
-      elements: [],
-    });
 
     handleClose();
   }
 
   const handleClose = () => {
     setOpenModal(false);
-
+    setTempFilterData({
+      name: "",
+      effect: "",
+      sets: [],
+      elements: [],
+      legality_state: "",
+      legality_format: "",
+    });
     if (window.history.state?.modal) {
       window.history.back();
     }
@@ -174,83 +192,15 @@ export function ModalDetailFilterGA({
           close={handleClose}
           size={isMobile ? "100%" : "70%"}
         >
-          {filterFields.map((field) => (
-            <Flex
-              key={field.key}
-              direction={isMobile ? "column" : "row"}
-              justify={"space-between"}
-              align={isMobile ? "start" : "center"}
-              mb={10}
-              gap={5}
-            >
-              <Flex align={"center"} justify={"center"} gap={5}>
-                {field.icon}
-                <Text size="xs">{field.label}</Text>
-              </Flex>
-
-              {!field.isMulti ? (
-                <TextInput
-                  w={isMobile ? "100%" : "75%"}
-                  placeholder={field.placeholder}
-                  size="xs"
-                  value={tempFilterData[field.key]}
-                  onChange={(e) =>
-                    setTempFilterData({
-                      ...tempFilterData,
-                      [field.key]: e.target.value,
-                    })
-                  }
-                  classNames={{
-                    input: classes.inputGlass,
-                  }}
-                />
-              ) : (
-                <MultiSelect
-                  w={isMobile ? "100%" : "75%"}
-                  placeholder={
-                    (tempFilterData[field.key]?.length ?? 0) > 0
-                      ? ""
-                      : field.placeholder
-                  }
-                  size="xs"
-                  data={getSelectData(field.key)}
-                  value={tempFilterData[field.key] as string[]}
-                  onChange={(value) =>
-                    setTempFilterData({
-                      ...tempFilterData,
-                      [field.key]: value,
-                    })
-                  }
-                  classNames={{
-                    input: classes.inputGlass,
-                    dropdown: classes.dropdownGlass,
-                    option: classes.optionGlass,
-                    empty: classes.emptyGlass,
-                  }}
-                  renderOption={({ option }) => (
-                    <>
-                      {field.key == "elements" ? (
-                        <Flex align="center" gap={8}>
-                          <Flex
-                            className={classes.elementEffect}
-                            style={{
-                              backgroundImage: `url("https://cdn2.gatcg.com/i/elements/${option.label.toLowerCase()}.png")`,
-                            }}
-                          />
-                          <Text size="md">{option.label}</Text>
-                        </Flex>
-                      ) : (
-                        <Text size="md">{option.label}</Text>
-                      )}
-                    </>
-                  )}
-                  searchable
-                  clearable
-                  nothingFoundMessage="No data"
-                  hidePickedOptions
-                />
-              )}
-            </Flex>
+          {filterFields.map((field, index) => (
+            <React.Fragment key={index}>
+              <InputFieldDetailFilterGA
+                field={field}
+                tempFilterData={tempFilterData}
+                setTempFilterData={setTempFilterData}
+                getSelectData={getSelectData}
+              />
+            </React.Fragment>
           ))}
 
           <Flex justify="flex-end" mt="md">

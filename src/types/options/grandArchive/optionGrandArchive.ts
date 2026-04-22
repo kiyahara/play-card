@@ -8,4 +8,5 @@ export interface GrandArchiveFilterOptionsInterace {
   element: SelectClassGAInterface[];
   rarity: SelectClassGAInterface[];
   set: SelectClassGAInterface[];
+  gameFormat: SelectClassGAInterface[];
 }
