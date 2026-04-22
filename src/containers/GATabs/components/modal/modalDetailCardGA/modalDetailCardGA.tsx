@@ -50,7 +50,19 @@ export function ModalDetailCardGA({
       );
 
       if (response) {
-        setDataset(dataForDetail.result_editions[0]);
+        console.log(dataForDetail);
+
+        const initialSet = dataForDetail.result_editions[0];
+        const initialGroup = dataForDetail.dataGroup.find(
+          (valueGroup) =>
+            initialSet.set?.name?.includes(valueGroup.name) ||
+            initialSet.set.prefix.includes(valueGroup.abbreviation),
+        );
+
+        setDataset({
+          ...initialSet,
+          dataGroup: initialGroup,
+        });
         setDataPrice(response.data);
       }
     } catch (error) {
@@ -75,6 +87,7 @@ export function ModalDetailCardGA({
   }, [openModal]);
 
   useEffect(() => {
+    console.log(dataSet);
     if (dataSet && dataSet.other_orientations.length > 0) {
       setDataOtherOrientation(dataSet.other_orientations[0]);
     } else {

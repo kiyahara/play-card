@@ -44,10 +44,12 @@ export function ImageCardModalDetailGA({
             (valueDetail) => valueDetail.uuid == e,
           );
 
-          if (!found) return; // ⛔ penting
+          if (!found) return;
 
-          const foundGroup = dataDetail.dataGroup.find((valueGroup) =>
-            found.set?.name?.includes(valueGroup.name),
+          const foundGroup = dataDetail.dataGroup.find(
+            (valueGroup) =>
+              found.set?.name?.includes(valueGroup.name) ||
+              found.set?.prefix.includes(valueGroup.abbreviation),
           );
 
           setDataset({

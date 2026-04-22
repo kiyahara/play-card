@@ -12,12 +12,6 @@ export function ShowingFilterData({
   data,
   filterData,
 }: PropShowingFilterDataTypes) {
-  console.log(
-    Object.entries(filterData) as [
-      keyof InputFilterProductsInterface,
-      InputFilterProductsInterface[keyof InputFilterProductsInterface],
-    ][],
-  );
   return (
     <>
       {data && (

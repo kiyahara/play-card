@@ -3,6 +3,7 @@ import { Flex, Image, Text } from "@mantine/core";
 import moment from "moment";
 import classes from "./priceCard.module.css";
 import { rarityTranslate } from "@/utils";
+import { useEffect } from "react";
 
 interface PropsPriceCardModalDetailGATypes {
   dataSet: EditionGA;
@@ -22,6 +23,9 @@ export function PriceCardModalDetailGA({
       valuePrice.groupId == dataSet.dataGroup?.groupId,
   );
 
+  useEffect(() => {
+    console.log(dataSet);
+  }, [dataSet]);
   return (
     <Flex w="100%" direction="column" gap={10}>
       <Text size="lg" fw="bold" pt={5} w="100%">
