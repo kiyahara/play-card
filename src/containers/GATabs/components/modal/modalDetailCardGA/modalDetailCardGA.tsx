@@ -50,8 +50,6 @@ export function ModalDetailCardGA({
       );
 
       if (response) {
-        console.log(dataForDetail);
-
         const initialSet = dataForDetail.result_editions[0];
         const initialGroup = dataForDetail.dataGroup.find(
           (valueGroup) =>
@@ -87,7 +85,6 @@ export function ModalDetailCardGA({
   }, [openModal]);
 
   useEffect(() => {
-    console.log(dataSet);
     if (dataSet && dataSet.other_orientations.length > 0) {
       setDataOtherOrientation(dataSet.other_orientations[0]);
     } else {

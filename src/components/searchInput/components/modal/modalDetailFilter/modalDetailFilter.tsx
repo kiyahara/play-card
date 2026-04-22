@@ -108,7 +108,6 @@ export function ModalDetailFilterGA({
 
   useEffect(() => {
     if (dataOption == null && openModal) {
-      console.log(tempFilterData);
       getOptionData();
     }
   }, [openModal]);
