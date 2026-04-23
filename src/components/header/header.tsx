@@ -1,15 +1,18 @@
 "use client";
 
-import { AppShell, Flex, Image } from "@mantine/core";
+import { AppShell, Flex, Image, Text } from "@mantine/core";
 import { SearchInput } from "../searchInput";
 import { useViewportSize } from "@mantine/hooks";
-import classes from "./header.module.css";
 import useBoundStore from "@/store";
+import classes from "./header.module.css";
+import { useRouter } from "next/navigation";
 
 export function Navbar() {
-  const { searchInput, setSearchInput } = useBoundStore().generalStoreData;
+  const { searchInput, setSearchInput, setLoading } =
+    useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+  const router = useRouter();
 
   return (
     <>
@@ -27,6 +30,7 @@ export function Navbar() {
               justify="flex-start"
               align="flex-start"
               style={{ textAlign: "left" }}
+              onClick={() => router.push("./home")}
             >
               <Image
                 radius="md"
@@ -48,7 +52,6 @@ export function Navbar() {
             >
               <SearchInput
                 value={searchInput}
-                className={classes.glass}
                 setSearchData={setSearchInput}
                 placeholder="Cari Produk..."
               />
@@ -59,25 +62,14 @@ export function Navbar() {
                 align={"center"}
                 justify={"end"}
                 gap={3}
+                onClick={() => {
+                  setLoading(true);
+                  router.push("/deckBuilder");
+                }}
               >
-                {/* <ActionIcon variant="transparent" aria-label="Setting">
-                  <IconShoppingCartFilled
-                    width={20}
-                    height={20}
-                    color="#fff"
-                    stroke={2}
-                    //   onClick={handleSetting}
-                  />
-                </ActionIcon>
-                <ActionIcon variant="transparent" aria-label="Setting">
-                  <IconUserFilled
-                    width={20}
-                    height={20}
-                    color="#fff"
-                    stroke={2}
-                    //   onClick={handleSetting}
-                  />
-                </ActionIcon> */}
+                <Text size="md" className={classes.textDeckBuilder}>
+                  Deckbuilder
+                </Text>
               </Flex>
             </Flex>
           </Flex>

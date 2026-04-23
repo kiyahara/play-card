@@ -3,6 +3,7 @@ import { IconAdjustmentsHorizontal, IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { ModalDetailFilterGA } from "./components";
+import classes from "./searchInput.module.css";
 
 interface SearchInputInterface {
   placeholder?: string;
@@ -58,19 +59,8 @@ export function SearchInput({
             }}
           />
         }
-        styles={{
-          input: {
-            position: "relative",
-            overflow: "hidden",
-            transition: "all 0.3s ease",
-            color: "white",
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05))",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            border: "1px solid rgba(255,255,255,0.25)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
-          },
+        classNames={{
+          input: classes.inputSearch,
         }}
       />
       <ModalDetailFilterGA
