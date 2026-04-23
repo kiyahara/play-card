@@ -1,8 +1,10 @@
-import { Box, Card, Flex, Image, Text } from "@mantine/core";
+import { Box, Button, Card, Flex, Image, Text } from "@mantine/core";
 import classes from "./contentCardGA.module.css";
 import { DetailCardGrandArchive } from "@/types";
 import { rarityTranslate } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
+import { IconRepeat } from "@tabler/icons-react";
+import { useState } from "react";
 
 interface PropCardItemProductTabsTypes {
   value: DetailCardGrandArchive;
@@ -13,6 +15,7 @@ export function ContentCardGA({
   value,
   onClick,
 }: PropCardItemProductTabsTypes) {
+  const [isFlipped, setIsFlipped] = useState(false);
   const { width } = useViewportSize();
   const isMobile = width <= 768;
   const valueResultEdition = value.result_editions.sort((a, b) => {
@@ -28,7 +31,6 @@ export function ContentCardGA({
       radius={12}
       shadow="sm"
       c="white"
-      onClick={onClick}
     >
       <Box
         style={{
@@ -71,15 +73,58 @@ export function ContentCardGA({
         // w={isMobile ? "50%" : "50%"}
       >
         <Flex justify={"start"} align={"start"} gap={10}>
-          <Image
-            h="100%"
-            w={isMobile ? 180 : 200}
-            src={`https://api.gatcg.com${valueResultEdition[0].image}`}
-            alt="logo"
-            radius="md"
-          />
+          <Flex className={classes.imageWrapper}>
+            <Flex className={classes.flipWrapper}>
+              <Flex
+                className={`${classes.flipInner} ${
+                  isFlipped ? classes.flipped : ""
+                }`}
+              >
+                {/* FRONT */}
+                <Flex className={classes.flipFront}>
+                  <Image
+                    src={`https://api.gatcg.com${valueResultEdition[0].image}`}
+                    alt="front"
+                    radius={15}
+                    h="100%"
+                    w="100%"
+                  />
+                </Flex>
+
+                {/* BACK */}
+                <Flex className={classes.flipBack}>
+                  <Image
+                    src={`https://api.gatcg.com${
+                      valueResultEdition[0].other_orientations &&
+                      valueResultEdition[0].other_orientations.length > 0
+                        ? valueResultEdition[0].other_orientations[0].edition
+                            .image
+                        : valueResultEdition[0].image
+                    }`}
+                    alt="back"
+                    radius={15}
+                    h="100%"
+                    w="100%"
+                  />
+                </Flex>
+              </Flex>
+            </Flex>
+
+            {valueResultEdition[0].other_orientations &&
+            valueResultEdition[0].other_orientations.length > 0 ? (
+              <Button
+                size={isMobile ? "xs" : "sm"}
+                className={classes.floatingButton}
+                onClick={() => setIsFlipped((prev) => !prev)}
+              >
+                <IconRepeat size={14} />
+              </Button>
+            ) : null}
+          </Flex>
           <Flex justify={"space-between"} direction={"column"} gap={5} pt={10}>
-            <Text fz="md">{value.name}</Text>
+            <Text fz="md" onClick={onClick} className={classes.cardLink}>
+              {value.name}
+            </Text>
 
             <Box mt="xs">
               <Text size="sm">{valueResultEdition[0].set.name}</Text>

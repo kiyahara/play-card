@@ -1,13 +1,33 @@
 "use client";
 
+import { marketGAService } from "@/api/services";
 import { ManageProductGATabs } from "@/containers";
 import useBoundStore from "@/store";
+import { errorNotification } from "@/utils";
 import { Flex, Tabs, Text } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ManageMainHome() {
-  const { setSearchInput } = useBoundStore().generalStoreData;
+  const { setSearchInput, setLoading, setDataGroup } =
+    useBoundStore().generalStoreData;
   const [activeTab, setActiveTab] = useState<string | null>("GA");
+
+  async function getGroupProductGA() {
+    setLoading(true);
+    try {
+      const response = await marketGAService.getGroupsByCategoryId(74);
+
+      if (response) {
+        setDataGroup(response);
+      }
+    } catch (error) {
+      errorNotification(error);
+    }
+  }
+
+  useEffect(() => {
+    getGroupProductGA();
+  }, []);
 
   return (
     <>

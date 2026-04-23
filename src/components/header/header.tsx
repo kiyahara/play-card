@@ -5,11 +5,14 @@ import { SearchInput } from "../searchInput";
 import { useViewportSize } from "@mantine/hooks";
 import classes from "./header.module.css";
 import useBoundStore from "@/store";
+import { useRouter } from "next/navigation";
 
 export function Navbar() {
   const { searchInput, setSearchInput } = useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
+
+  const router = useRouter();
 
   return (
     <>
@@ -27,6 +30,7 @@ export function Navbar() {
               justify="flex-start"
               align="flex-start"
               style={{ textAlign: "left" }}
+              onClick={() => router.push("/home")}
             >
               <Image
                 radius="md"

@@ -29,3 +29,179 @@
   );
   opacity: 0.4;
 }
+
+.cardLink {
+  color: #ff4d6d; /* merah tapi lebih soft */
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+
+  /* biar smooth */
+  display: inline-block;
+  position: relative;
+}
+
+/* underline animasi */
+.cardLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff4d6d, #ff99aa);
+  transition: width 0.25s ease;
+}
+
+/* hover effect */
+.cardLink {
+  color: #74c0fc; /* soft blue */
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+/* hover */
+.cardLink:hover {
+  color: #a5d8ff;
+
+  /* glow biru */
+  text-shadow:
+    0 0 6px rgba(116, 192, 252, 0.6),
+    0 0 12px rgba(116, 192, 252, 0.4);
+
+  transform: translateY(-1px);
+}
+
+/* active (klik) */
+.cardLink:active {
+  transform: scale(0.96);
+}
+
+.inputSelect {
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+  color: white;
+}
+
+.dropdownSelect {
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.optionSelect {
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.optionSelect:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.optionSelect[data-hovered] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: black !important;
+}
+
+.optionSelect[data-selected] {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.flipWrapper {
+  perspective: 1000px;
+}
+
+.flipInner {
+  position: relative;
+  width: 200px; /* desktop size (sama kayak sebelumnya) */
+  aspect-ratio: 2.5 / 3.5;
+
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  inset: 0;
+
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* IMPORTANT: biar image full & rapi */
+.flipFront img,
+.flipBack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flipBack {
+  transform: rotateY(180deg);
+}
+
+/* Mobile size (180px seperti awal) */
+@media (max-width: 768px) {
+  .flipInner {
+    width: 180px;
+  }
+}
+
+/* Floating button */
+.floatingButton {
+  position: absolute;
+  top: 65%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+
+  border-radius: 999px;
+
+  transition: all 0.15s ease;
+}
+
+.floatingButton:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.floatingButton:active {
+  transform: translateY(-50%) translateY(2px) scale(0.98);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .floatingButton {
+    right: 5px;
+  }
+}
