@@ -30,7 +30,7 @@ export function Navbar() {
               justify="flex-start"
               align="flex-start"
               style={{ textAlign: "left" }}
-              onClick={() => router.push("./home")}
+              onClick={() => router.push("/home")}
             >
               <Image
                 radius="md"

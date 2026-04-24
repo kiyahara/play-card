@@ -8,7 +8,7 @@ import { Flex, Tabs, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export default function ManageMainHome() {
-  const { setSearchInput, setDataGroup, setLoading } =
+  const { setSearchInput, setLoading, setDataGroup } =
     useBoundStore().generalStoreData;
   const [activeTab, setActiveTab] = useState<string | null>("GA");
 
