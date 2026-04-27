@@ -1,5 +1,4 @@
 import { GaService } from "@/api/services";
-import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import useBoundStore from "@/store";
 import {
   GrandArchiveFilterOptionsInterace,
@@ -19,6 +18,7 @@ import {
   IconScaleFilled,
 } from "@tabler/icons-react";
 import { InputFieldDetailFilterGA } from "./component";
+import { ModalUniversal } from "@/components/modalUniversal";
 
 interface PropsModalDetailCardGATypes {
   openModal: boolean;

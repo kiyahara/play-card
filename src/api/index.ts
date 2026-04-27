@@ -8,7 +8,6 @@ import queryString from "query-string";
 // const baseURLSupaBase = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const baseURLGA = process.env.NEXT_PUBLIC_BACKEND_URL_GA;
 const baseURLMarketGA = process.env.NEXT_PUBLIC_BACKEND_URL_TCGP;
-const baseURLYGO = process.env.NEXT_PUBLIC_BACKEND_URL_YGO;
 // const apiKey = process.env.NEXT_PUBLIC_NEXTAUTH_KEY;
 // const valueKey = process.env.NEXT_PUBLIC_NEXTAUTH_VALUE;
 
@@ -31,12 +30,6 @@ export const APISupabaseForGAAxiosInstance = axios.create({
   //   apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   //   Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
   // },
-});
-
-export const APIYGOAxiosInstance = axios.create({
-  baseURL: baseURLYGO,
-  // timeout: 1000 * 60,
-  timeout: 2000 * 60,
 });
 
 // const getApiKey = () => {
@@ -217,5 +210,4 @@ const createApi = (axiosInstance: AxiosInstance) => {
 
 export const apiGA = createApi(APIGAAxiosInstance);
 export const apiMarketGA = createApi(APIMarketGAAxiosInstance);
-export const apiYGO = createApi(APIYGOAxiosInstance);
 export const apiSupabase = createApi(APISupabaseForGAAxiosInstance);

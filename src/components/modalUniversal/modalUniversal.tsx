@@ -4,7 +4,7 @@ import { ModalUniversalInterface } from "@/types";
 import { Modal } from "@mantine/core";
 import classes from "./modalUniversal.module.css";
 
-export default function ModalUniversal({
+export function ModalUniversal({
   opened,
   close,
   title,

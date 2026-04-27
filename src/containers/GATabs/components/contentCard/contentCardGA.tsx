@@ -9,11 +9,19 @@ import { useState } from "react";
 interface PropCardItemProductTabsTypes {
   value: DetailCardGrandArchive;
   onClick: () => void;
+  canAdd?: boolean;
+  addData?: (value: DetailCardGrandArchive, valueAdded: number) => void;
+  isDetail?: boolean;
+  isAdded?: boolean;
 }
 
 export function ContentCardGA({
   value,
   onClick,
+  canAdd,
+  addData,
+  isDetail,
+  isAdded,
 }: PropCardItemProductTabsTypes) {
   const [isFlipped, setIsFlipped] = useState(false);
   const { width } = useViewportSize();
@@ -45,35 +53,15 @@ export function ContentCardGA({
         }}
       />
 
-      {/* <Box
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: 12,
-          background:
-            "linear-gradient(120deg, rgba(255,255,255,0.35), transparent 40%)",
-          opacity: 0.4,
-          pointerEvents: "none",
-        }}
-      /> */}
-
-      {/* <Card.Section inheritPadding px={0} w={isMobile ? "50%" : "50%"}>
-        <Image
-          h="100%"
-          w={isMobile ? 180 : 200}
-          src={`https://api.gatcg.com${valueResultEdition[0].image}`}
-          alt="logo"
-          radius="md"
-        />
-      </Card.Section> */}
-
-      <Card.Section
-        inheritPadding
-        // px={isMobile ? 10 : 0}
-        // w={isMobile ? "50%" : "50%"}
-      >
-        <Flex justify={"start"} align={"start"} gap={10}>
-          <Flex className={classes.imageWrapper}>
+      <Card.Section inheritPadding w={"100%"}>
+        <Flex justify={"start"} align={"start"} gap={10} w={"100%"} h={"100%"}>
+          <Flex
+            className={classes.imageWrapper}
+            h={"100%"}
+            align={"center"}
+            direction={"column"}
+            justify={"center"}
+          >
             <Flex className={classes.flipWrapper}>
               <Flex
                 className={`${classes.flipInner} ${
@@ -121,9 +109,21 @@ export function ContentCardGA({
               </Button>
             ) : null}
           </Flex>
-          <Flex justify={"space-between"} direction={"column"} gap={5} pt={10}>
+          <Flex
+            justify={"space-between"}
+            direction={"column"}
+            gap={5}
+            pt={10}
+            w={180}
+            h={isDetail ? "100%" : "auto"}
+          >
             <Text fz="md" onClick={onClick} className={classes.cardLink}>
-              {value.name}
+              {isFlipped
+                ? valueResultEdition[0].other_orientations &&
+                  valueResultEdition[0].other_orientations.length > 0
+                  ? valueResultEdition[0].other_orientations[0].name
+                  : value.name
+                : value.name}
             </Text>
 
             <Box mt="xs">
@@ -143,9 +143,31 @@ export function ContentCardGA({
             <Box mt="xs">
               <Text size="sm">Illustrator:</Text>
               <Text fz="sm" c="dimmed">
-                {valueResultEdition[0].illustrator}
+                {valueResultEdition[0].illustrator ?? "-"}
               </Text>
             </Box>
+            {canAdd ? (
+              <Flex
+                w={"100%"}
+                h={"100%"}
+                direction={"column"}
+                justify={"end"}
+                align={"end"}
+                pb={20}
+              >
+                <Button
+                  size={isMobile ? "xs" : "sm"}
+                  onClick={() => addData && addData(value, 1)}
+                  w={"100%"}
+                  disabled={isAdded}
+                  className={classes.glassButton}
+                >
+                  <Text size="sm">{isAdded ? "Added" : "Add To Deck"}</Text>
+                </Button>
+              </Flex>
+            ) : (
+              ""
+            )}
           </Flex>
         </Flex>
       </Card.Section>
