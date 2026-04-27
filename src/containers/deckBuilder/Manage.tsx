@@ -4,13 +4,32 @@ import useBoundStore from "@/store";
 import { Flex, Tabs, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ManageMaterialDecksGATabs } from "../deckBuilderTabs";
+import { marketGAService } from "@/api/services";
+import { errorNotification } from "@/utils";
 
 export default function ManageDeckBuilderHome() {
-  const { setSearchInput, setLoading } = useBoundStore().generalStoreData;
+  const { dataGroup, setSearchInput, setLoading, setDataGroup } =
+    useBoundStore().generalStoreData;
   const [activeTab, setActiveTab] = useState<string | null>("Material");
 
+  async function getGroupProductGA() {
+    setLoading(true);
+    try {
+      const response = await marketGAService.getGroupsByCategoryId(74);
+
+      if (response) {
+        setDataGroup(response);
+        setLoading(false);
+      }
+    } catch (error) {
+      errorNotification(error);
+    }
+  }
+
   useEffect(() => {
-    setLoading(false);
+    if (dataGroup.length == 0) {
+      getGroupProductGA();
+    }
   }, []);
 
   return (

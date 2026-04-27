@@ -3,6 +3,7 @@ import { Box, Card, Flex, Image, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive } from "@/types";
+
 import {
   AddCardGA,
   CardGA,
@@ -11,7 +12,7 @@ import {
 import classes from "./materialDecksTabs.module.css";
 import { IconPlus } from "@tabler/icons-react";
 
-export default function ManageMaterialDecksGATabs() {
+export default function ManageMainDecksGATabs() {
   const [data, setData] = useState<DetailCardGrandArchive[]>([]);
   const [dataCard, setDataCard] = useState<DetailCardGrandArchive[]>([]);
   const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
@@ -26,6 +27,10 @@ export default function ManageMaterialDecksGATabs() {
   useEffect(() => {
     setData([]);
   }, []);
+
+  useEffect(() => {
+    console.log(dataCard);
+  }, [dataCard]);
 
   return (
     <>
@@ -88,8 +93,8 @@ export default function ManageMaterialDecksGATabs() {
           cardAdded={dataCard}
           openModal={openModalAddCard}
           setOpenModal={setOpenModalAddCard}
-          addCardData={(data, valueAdded) => {
-            setDataCard([...dataCard, { ...data, addedCard: valueAdded }]);
+          addCardData={(data) => {
+            setDataCard([...dataCard, data]);
           }}
         />
         <ModalDetailCardGA

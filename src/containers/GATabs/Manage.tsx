@@ -6,12 +6,9 @@ import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
 import { LoadMoreIndicator } from "@/components";
-import {
-  ContentCardGA,
-  ModalDetailCardGA,
-  ShowingFilterData,
-} from "./components";
+import { ContentCardGA, ShowingFilterData } from "./components";
 import useBoundStore from "@/store";
+import { ModalDetailCardGA } from "../componentsGA";
 
 export default function ManageProductGATabs() {
   const [data, setData] = useState<ResponseGrandArchive | null>(null);

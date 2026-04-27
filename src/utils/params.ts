@@ -9,6 +9,7 @@ export function generateSearchParams({
   elements,
   sets,
   effect,
+  stats,
   legality_format,
   legality_state,
 }: Params): string {
@@ -22,6 +23,7 @@ export function generateSearchParams({
     !elements &&
     !sets &&
     !effect &&
+    !stats &&
     !legality_format &&
     !legality_state
   ) {
@@ -51,6 +53,9 @@ export function generateSearchParams({
   }
   if (effect) {
     result.push(`effect=${effect}`);
+  }
+  if (stats) {
+    result.push(`stats=${stats}`);
   }
   if (legality_format) {
     result.push(`legality_format=${legality_format}`);

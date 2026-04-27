@@ -64,6 +64,7 @@ export function Navbar() {
                 gap={3}
                 onClick={() => {
                   setLoading(true);
+                  setSearchInput("");
                   router.push("/deckBuilder");
                 }}
               >

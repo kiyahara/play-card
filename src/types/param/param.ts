@@ -9,4 +9,5 @@ export interface Params {
   legality_state?: string;
   elements?: string[];
   sets?: string[];
+  stats?: string;
 }

@@ -1,4 +1,3 @@
-import ModalUniversal from "@/components/modalUniversal/modalUniversal";
 import {
   DetailCardGrandArchive,
   DetailOtherOrientationCardGrandArchive,
@@ -16,6 +15,7 @@ import {
   ImageCardModalDetailGA,
   PriceCardModalDetailGA,
 } from "./components";
+import { ModalUniversal } from "@/components";
 
 interface PropsModalDetailCardGATypes {
   dataDetail: DetailCardGrandArchive | null;
@@ -108,10 +108,10 @@ export function ModalDetailCardGA({
       }
     };
 
-    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("detailGA", handlePopState);
 
     return () => {
-      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("detailGA", handlePopState);
     };
   }, [openModal]);
 

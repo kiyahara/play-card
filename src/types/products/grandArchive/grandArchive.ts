@@ -114,6 +114,7 @@ export interface DetailCardGrandArchive {
   classes: string[];
   cost_memory: number;
   dataGroup: DataGroupGAInterface[];
+  addedCard: number;
   cost_reserve: number | null;
   cost: CostGrandArchiveInterface;
   created_at: Date;
