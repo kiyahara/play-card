@@ -1,15 +1,16 @@
 "use client";
-import { Flex, SimpleGrid, Text } from "@mantine/core";
+import { Box, Flex, SimpleGrid, Text } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 import { GaService } from "@/api/services";
 import { errorNotification } from "@/utils";
 import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive, Params, ResponseGrandArchive } from "@/types";
-import { LoadMoreIndicator, ModalUniversal } from "@/components";
+import { LoadMoreIndicator, ModalUniversal, SearchInput } from "@/components";
 import useBoundStore from "@/store";
 import { ModalDetailCardGA } from "@/containers/componentsGA";
 import { ContentCardGA } from "@/containers/GATabs/components";
 import ShowLoadingModal from "@/utils/swal";
+import classes from "./addCard.module.css";
 
 interface PropsAddCardGAInterface {
   cardAdded: DetailCardGrandArchive[];
@@ -28,13 +29,13 @@ export function AddCardGA({
   const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
     null,
   );
-
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [openModalDetail, setOpenModalDetail] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
-  const { filterData, search, dataGroup } = useBoundStore().generalStoreData;
+  const { filterData, dataGroup } = useBoundStore().generalStoreData;
   const { width } = useViewportSize();
   const isMobile = width <= 768;
   const isLaptop = width <= 1400;
@@ -212,9 +213,17 @@ export function AddCardGA({
         close={handleClose}
         size={"100%"}
       >
+        <Box className={classes.stickySearch}>
+          <SearchInput
+            value={search}
+            setSearchData={setSearch}
+            placeholder="Cari Material Card..."
+          />
+        </Box>
         <Flex
           h={data && data.total_cards > 6 ? "100%" : "100vh"}
           direction="column"
+          pt={10}
         >
           <Flex
             justify="space-between"
@@ -283,6 +292,7 @@ export function AddCardGA({
             setOpenModal={setOpenModalDetail}
           />
         </Flex>
+        {/* </Flex> */}
       </ModalUniversal>
       <ShowLoadingModal isLoading={loading} />
     </>

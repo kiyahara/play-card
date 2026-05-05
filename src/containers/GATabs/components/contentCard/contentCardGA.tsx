@@ -40,20 +40,7 @@ export function ContentCardGA({
       shadow="sm"
       c="white"
     >
-      <Box
-        style={{
-          position: "absolute",
-          width: 200,
-          height: 200,
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.15), transparent)",
-          top: -50,
-          right: -50,
-          filter: "blur(40px)",
-        }}
-      />
-
-      <Card.Section inheritPadding w={"100%"}>
+      <Card.Section p={5} w={"100%"}>
         <Flex justify={"start"} align={"start"} gap={10} w={"100%"} h={"100%"}>
           <Flex
             className={classes.imageWrapper}

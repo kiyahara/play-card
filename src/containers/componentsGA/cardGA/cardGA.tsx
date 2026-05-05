@@ -1,14 +1,19 @@
-import { Box, Card, Flex, Image } from "@mantine/core";
+import { Card, Flex, Image } from "@mantine/core";
 import classes from "./cardGA.module.css";
 import { DetailCardGrandArchive } from "@/types";
 import { useViewportSize } from "@mantine/hooks";
 
 interface PropCardItemProductTabsTypes {
+  isFit?: boolean;
   value: DetailCardGrandArchive;
   onClick: () => void;
 }
 
-export function CardGA({ value, onClick }: PropCardItemProductTabsTypes) {
+export function CardGA({
+  value,
+  onClick,
+  isFit,
+}: PropCardItemProductTabsTypes) {
   const { width } = useViewportSize();
   const isMobile = width <= 768;
   const valueResultEdition = value.result_editions.sort((a, b) => {
@@ -24,26 +29,14 @@ export function CardGA({ value, onClick }: PropCardItemProductTabsTypes) {
       radius={12}
       shadow="sm"
       c="white"
+      w={isFit ? "fit-content" : ""}
       onClick={onClick}
     >
-      <Box
-        style={{
-          position: "absolute",
-          width: 200,
-          height: 200,
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.15), transparent)",
-          top: -50,
-          right: -50,
-          filter: "blur(40px)",
-        }}
-      />
-
-      <Card.Section inheritPadding>
+      <Card.Section p={5}>
         <Flex justify={"start"} align={"start"} gap={10}>
           <Image
             h="100%"
-            w={isMobile ? 180 : 200}
+            w={isMobile ? 180 : 250}
             src={`https://api.gatcg.com${valueResultEdition[0].image}`}
             alt="logo"
             radius="md"

@@ -1,6 +1,6 @@
 "use client";
 import { Box, Card, Flex, Image, SimpleGrid, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useViewportSize } from "@mantine/hooks";
 import { DetailCardGrandArchive } from "@/types";
 import {
@@ -12,7 +12,6 @@ import classes from "./materialDecksTabs.module.css";
 import { IconPlus } from "@tabler/icons-react";
 
 export default function ManageMaterialDecksGATabs() {
-  const [data, setData] = useState<DetailCardGrandArchive[]>([]);
   const [dataCard, setDataCard] = useState<DetailCardGrandArchive[]>([]);
   const [activeData, setActiveData] = useState<DetailCardGrandArchive | null>(
     null,
@@ -23,13 +22,12 @@ export default function ManageMaterialDecksGATabs() {
   const { width } = useViewportSize();
   const isMobile = width <= 768;
 
-  useEffect(() => {
-    setData([]);
-  }, []);
-
   return (
     <>
-      <Flex h={data && data.length > 6 ? "100%" : "100vh"} direction="column">
+      <Flex
+        h={dataCard && dataCard.length > (isMobile ? 6 : 10) ? "100%" : "100vh"}
+        direction="column"
+      >
         <Flex
           justify="space-between"
           w="100%"
@@ -38,11 +36,11 @@ export default function ManageMaterialDecksGATabs() {
           gap={5}
         >
           <Text size="md" fw="bold" c="white">
-            Material Decks {`(${data.length} cards)`}
+            Material Decks {`(${dataCard.length} cards)`}
           </Text>
 
-          <SimpleGrid cols={isMobile ? 2 : 5} spacing="md" pb={10}>
-            {data?.map((value, index) => (
+          <SimpleGrid cols={isMobile ? 2 : 6} spacing="md" pb={10}>
+            {dataCard.map((value, index) => (
               <React.Fragment key={index}>
                 <CardGA
                   value={value}
@@ -50,6 +48,7 @@ export default function ManageMaterialDecksGATabs() {
                     setActiveData(value);
                     setOpenModalDetail(true);
                   }}
+                  isFit
                 />
               </React.Fragment>
             ))}
@@ -68,7 +67,7 @@ export default function ManageMaterialDecksGATabs() {
                   <Flex justify="center" align="center">
                     <Image
                       h="100%"
-                      w={200}
+                      w={isMobile ? 180 : 250}
                       src="https://img.silvie.org/misc/card-back.png"
                       alt="logo"
                       radius="md"

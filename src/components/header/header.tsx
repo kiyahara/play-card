@@ -67,8 +67,13 @@ export function Navbar() {
                   setSearchInput("");
                   router.push("/deckBuilder");
                 }}
+                pl={5}
               >
-                <Text size="md" className={classes.textDeckBuilder}>
+                <Text
+                  size={isMobile ? "xs" : "md"}
+                  className={classes.textDeckBuilder}
+                  p={isMobile ? 5 : 8}
+                >
                   Deckbuilder
                 </Text>
               </Flex>

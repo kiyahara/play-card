@@ -123,7 +123,7 @@
 
 .flipInner {
   position: relative;
-  width: 200px; /* desktop size (sama kayak sebelumnya) */
+  width: 260px; /* 🔥 lebih gede */
   aspect-ratio: 2.5 / 3.5;
 
   transform-style: preserve-3d;
@@ -144,12 +144,12 @@
   overflow: hidden;
 }
 
-/* IMPORTANT: biar image full & rapi */
 .flipFront img,
 .flipBack img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* atau contain kalau gak mau kepotong */
+  border-radius: 12px;
 }
 
 .flipBack {
@@ -159,7 +159,7 @@
 /* Mobile size (180px seperti awal) */
 @media (max-width: 768px) {
   .flipInner {
-    width: 180px;
+    width: 200px;
   }
 }
 
